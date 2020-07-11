@@ -35,3 +35,4 @@ out/
 ## trancoder ##
 uploads
 *.log
+logs
