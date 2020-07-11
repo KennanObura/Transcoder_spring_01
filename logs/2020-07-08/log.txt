@@ -1,0 +1,22 @@
+INFO :: 2020-07-08 at 20:10:16.622 EAT ~~~ Generating THUMBNAIL of media_example.mp4
+SUCCESS :: 2020-07-08 at 20:10:21.405 EAT ~~~ Finalizing THUMBNAIL of media_example.mp4. files written to /uploads/P10089_agriculture/
+INFO :: 2020-07-08 at 20:17:04.717 EAT ~~~ Generating STREAMABLEHSL of media_example.mp4
+SUCCESS :: 2020-07-08 at 20:17:56.168 EAT ~~~ Finalizing STREAMABLEHSL of media_example.mp4. files written to /uploads/P10089_agriculture/
+INFO :: 2020-07-08 at 20:20:25.378 EAT ~~~ Generating STREAMABLEHSL of media_example.mp4
+INFO :: 2020-07-08 at 20:20:25.378 EAT ~~~ Generating THUMBNAIL of media_example.mp4
+SUCCESS :: 2020-07-08 at 20:20:31.573 EAT ~~~ Finalizing THUMBNAIL of media_example.mp4. files written to /uploads/P10089_agriculture/
+SUCCESS :: 2020-07-08 at 20:21:21.185 EAT ~~~ Finalizing STREAMABLEHSL of media_example.mp4. files written to /uploads/P10089_agriculture/
+INFO :: 2020-07-08 at 20:23:47.130 EAT ~~~ Generating STREAMABLEHSL of media_example.mp4
+INFO :: 2020-07-08 at 20:23:47.130 EAT ~~~ Generating THUMBNAIL of media_example.mp4
+SUCCESS :: 2020-07-08 at 20:23:53.267 EAT ~~~ Finalizing THUMBNAIL of media_example.mp4. files written to /uploads/P10089_agriculture/
+INFO :: 2020-07-08 at 20:23:53.272 EAT ~~~ Generating SPRINT of media_example.mp4
+INFO :: 2020-07-08 at 20:23:53.278 EAT ~~~ Generating SPLIT of media_example.mp4
+SUCCESS :: 2020-07-08 at 20:23:55.273 EAT ~~~ Finalizing SPRINT of media_example.mp4. files written to /uploads/P10089_agriculture/thumbnails
+SUCCESS :: 2020-07-08 at 20:24:44.725 EAT ~~~ Finalizing STREAMABLEHSL of media_example.mp4. files written to /uploads/P10089_agriculture/
+INFO :: 2020-07-09 at 06:27:37.195 EAT ~~~ Generating THUMBNAIL of media_example.mp4
+INFO :: 2020-07-09 at 06:27:37.195 EAT ~~~ Generating STREAMABLEHSL of media_example.mp4
+SUCCESS :: 2020-07-09 at 06:27:43.315 EAT ~~~ Finalizing THUMBNAIL of media_example.mp4. files written to /uploads/P10089_agriculture/
+INFO :: 2020-07-09 at 06:27:43.324 EAT ~~~ Generating SPRINT of media_example.mp4
+INFO :: 2020-07-09 at 06:27:43.335 EAT ~~~ Generating SPLIT of media_example.mp4
+SUCCESS :: 2020-07-09 at 06:27:45.277 EAT ~~~ Finalizing SPRINT of media_example.mp4. files written to /uploads/P10089_agriculture/thumbnails
+SUCCESS :: 2020-07-09 at 06:28:24.118 EAT ~~~ Finalizing STREAMABLEHSL of media_example.mp4. files written to /uploads/P10089_agriculture/

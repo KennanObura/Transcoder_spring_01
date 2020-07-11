@@ -1,0 +1,26 @@
+INFO :: 2020-07-09 at 14:53:37.143 EAT ~~~ Generating THUMBNAIL of media_example.mp4
+INFO :: 2020-07-09 at 14:53:37.143 EAT ~~~ Generating STREAMABLEHSL of media_example.mp4
+SUCCESS :: 2020-07-09 at 14:53:43.302 EAT ~~~ Finalizing THUMBNAIL of media_example.mp4. files written to /uploads/P10077_documentary/
+INFO :: 2020-07-09 at 14:53:43.312 EAT ~~~ Generating SPRINT of media_example.mp4
+SUCCESS :: 2020-07-09 at 14:53:45.268 EAT ~~~ Finalizing SPRINT of media_example.mp4. files written to /uploads/P10077_documentary//thumbnails
+INFO :: 2020-07-09 at 14:53:48.686 EAT ~~~ Generating STREAMABLEHSL of media_example.mp4
+INFO :: 2020-07-09 at 14:53:48.689 EAT ~~~ Generating THUMBNAIL of media_example.mp4
+SUCCESS :: 2020-07-09 at 14:53:55.670 EAT ~~~ Finalizing THUMBNAIL of media_example.mp4. files written to /uploads/P10089_agriculture/
+INFO :: 2020-07-09 at 14:53:55.676 EAT ~~~ Generating SPRINT of media_example.mp4
+SUCCESS :: 2020-07-09 at 14:53:57.361 EAT ~~~ Finalizing SPRINT of media_example.mp4. files written to /uploads/P10089_agriculture//thumbnails
+INFO :: 2020-07-09 at 14:53:58.330 EAT ~~~ Generating STREAMABLEHSL of media_example.mp4
+INFO :: 2020-07-09 at 14:53:58.338 EAT ~~~ Generating THUMBNAIL of media_example.mp4
+SUCCESS :: 2020-07-09 at 14:54:07.570 EAT ~~~ Finalizing THUMBNAIL of media_example.mp4. files written to /uploads/media_example/
+INFO :: 2020-07-09 at 14:54:07.589 EAT ~~~ Generating SPRINT of media_example.mp4
+SUCCESS :: 2020-07-09 at 14:54:09.678 EAT ~~~ Finalizing SPRINT of media_example.mp4. files written to /uploads/media_example//thumbnails
+SUCCESS :: 2020-07-09 at 14:56:41.240 EAT ~~~ Finalizing STREAMABLEHSL of media_example.mp4. files written to /uploads/P10077_documentary/
+SUCCESS :: 2020-07-09 at 14:56:54.328 EAT ~~~ Finalizing STREAMABLEHSL of media_example.mp4. files written to /uploads/P10089_agriculture/
+SUCCESS :: 2020-07-09 at 14:56:57.978 EAT ~~~ Finalizing STREAMABLEHSL of media_example.mp4. files written to /uploads/media_example/
+INFO :: 2020-07-09 at 15:48:02.390 EAT ~~~ Generating STREAMABLEHSL of media_example.mp4
+INFO :: 2020-07-09 at 15:48:02.391 EAT ~~~ Generating THUMBNAIL of media_example.mp4
+SUCCESS :: 2020-07-09 at 15:48:09.195 EAT ~~~ Finalizing THUMBNAIL of media_example.mp4. files written to /uploads/P10077_documentary/
+INFO :: 2020-07-09 at 15:48:09.221 EAT ~~~ Generating SPRINT of media_example.mp4
+SUCCESS :: 2020-07-09 at 15:48:10.872 EAT ~~~ Finalizing SPRINT of media_example.mp4. files written to /uploads/P10077_documentary//thumbnails
+SUCCESS :: 2020-07-09 at 15:49:12.413 EAT ~~~ Finalizing STREAMABLEHSL of media_example.mp4. files written to /uploads/P10077_documentary/
+INFO :: 2020-07-09 at 16:38:33.835 EAT ~~~ Generating SPLIT of media_example.mp4
+INFO :: 2020-07-09 at 16:41:30.819 EAT ~~~ Generating SPLIT of media_example.mp4
