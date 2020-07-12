@@ -1,36 +1,31 @@
 package kennan.co.ke.transcoder_01.repository.RepositoryTranscode;
 
+import kennan.co.ke.transcoder_01.api.Exception.PathNotFoundException;
 import kennan.co.ke.transcoder_01.core.Sprint;
 import kennan.co.ke.transcoder_01.core.StreamableHsl;
 import kennan.co.ke.transcoder_01.core.Thumbnail;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 import kennan.co.ke.transcoder_01.core.model.MediaModel;
 import kennan.co.ke.transcoder_01.repository.base.AbstractRepository;
-import kennan.co.ke.transcoder_01.repository.response.ResponseMessage;
-import kennan.co.ke.transcoder_01.repository.response.Status;
-import kennan.co.ke.transcoder_01.repository.util.PathValidator.PathValidator;
+
 
 public class TranscodeRepository
         extends AbstractRepository
-        implements InterfaceTranscodeRepository{
+        implements InterfaceTranscodeRepository {
     /**
      * @param params is empty
      */
     @Override
-    public void dispatch(Media media, String... params) {
+    public void dispatch(Media media, String... params) throws InterruptedException, PathNotFoundException {
         transcode(media);
     }
 
-    @Override
-    public boolean isPathValid(String path) {
-        return PathValidator.exist(path);
-    }
 
+    private void transcode(Media media) throws InterruptedException, PathNotFoundException {
 
-    private ResponseMessage<String> transcode(Media media) {
-
-        if(!isPathValid(media.getDirectory() + media.getName()))
-            return new ResponseMessage<>(404, Status.ERROR);
+        if (!isPathValid(media.getDirectory() + media.getName())) {
+            throw PathNotFoundException.createWith(media.getDirectory() + media.getName());
+        }
 
         MediaModel thumbnailContainer = new MediaModel(media);
         thumbnailContainer.setMasterDirectory(media.getDirectory() + "thumbnails/");
@@ -46,7 +41,6 @@ public class TranscodeRepository
         hslContainer.setMasterDirectory(media.getDirectory() + "hsl");
 
 
-
         Thread hslGeneratorThread = new Thread(new StreamableHsl(hslContainer));
         hslGeneratorThread.start();
 
@@ -54,28 +48,11 @@ public class TranscodeRepository
         Thread thumbnailGeneratorThread = new Thread(new Thumbnail(thumbnailContainer));
         thumbnailGeneratorThread.start();
 
-        try {
-            thumbnailGeneratorThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.out.println("Interrupted");
 
-
-        }
+        thumbnailGeneratorThread.join();
 
         Thread sprintGeneratorThread = new Thread(new Sprint(sprintContainer));
         sprintGeneratorThread.start();
-
-        try {
-            sprintGeneratorThread.join();
-            hslGeneratorThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.out.println("Interrupted");
-            return new ResponseMessage<String>(500, Status.ERROR);
-        }
-
-        return new ResponseMessage<String>(201, Status.SUCCESS);
     }
 
 }

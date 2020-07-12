@@ -19,8 +19,8 @@ public class ActivityLogger {
 
     private final LogMessageType messageType;
     private final String message;
-    private final static String filePathName = "logs/" + AppDateTime.dateOnly() + "/log.txt";
-//    private final Queue<String> fileMessageQueue = new LinkedList<>();
+    private final static String filePathName = "logs/" + AppDateTime.getDateOnly() + "/log.txt";
+
 
 
     public void run() {
@@ -43,7 +43,7 @@ public class ActivityLogger {
 
     private String generateReadableMessage() {
         return this.messageType.toString() + " :: "
-                + AppDateTime.getFull() + " ~~~ "
+                + AppDateTime.getFullDateTime() + " ~~~ "
                 + message + "\r";
     }
 
@@ -55,7 +55,7 @@ public class ActivityLogger {
 
     private static boolean createLogFile() {
         createDirectory("logs/");
-        createDirectory("logs/" + AppDateTime.dateOnly());
+        createDirectory("logs/" + AppDateTime.getDateOnly());
 
         try {
             File file = new File(filePathName);

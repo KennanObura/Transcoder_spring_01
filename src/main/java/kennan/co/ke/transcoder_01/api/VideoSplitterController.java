@@ -2,6 +2,7 @@ package kennan.co.ke.transcoder_01.api;
 
 
 import kennan.co.ke.transcoder_01.api.Error.ApiError;
+import kennan.co.ke.transcoder_01.api.Exception.CoreCustomException;
 import kennan.co.ke.transcoder_01.api.Exception.InvalidTimeRangeException;
 import kennan.co.ke.transcoder_01.api.Exception.PathNotFoundException;
 import kennan.co.ke.transcoder_01.api.Exception.ProcessTerminatedException;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,23 +31,9 @@ public class VideoSplitterController {
             @RequestParam String starttime,
             @RequestParam String endtime,
             @RequestParam Integer sort) throws
-            PathNotFoundException,
-            ProcessTerminatedException,
-            InvalidTimeRangeException,
-            InterruptedException {
+            InvalidTimeRangeException, PathNotFoundException, IOException, ParseException {
         repository.dispatch(media, starttime, endtime, String.valueOf(sort));
-        return new ResponseEntity<String>(HttpStatus.CREATED);
-    }
-
-
-    @ExceptionHandler(PathNotFoundException.class)
-    public ResponseEntity<ApiError> handlePathNotFoundException(PathNotFoundException exception) {
-        List<String> errorMessages = exception.getErrors()
-                .stream()
-                .map(contentError -> contentError.getObjectName() + " " + contentError.getDefaultMessage())
-                .collect(Collectors.toList());
-
-        return new ResponseEntity<>(new ApiError(errorMessages), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 

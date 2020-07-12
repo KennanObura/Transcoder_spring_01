@@ -21,8 +21,8 @@ public abstract class Transcoder
         this.createDirectory(this.mediaModel.getMedia().getDirectory());
     }
 
-    public MediaModel mediaModel;
-    public File file;
+    public final MediaModel mediaModel;
+    public final File file;
     public AppProcess process;
     public final static String ffmpegPath = "/usr/bin/ffmpeg";
 
@@ -33,12 +33,7 @@ public abstract class Transcoder
 
     @Override
     public void run() {
-        AppMessage message = new AppMessage(
-                this.mediaModel.getMedia(),
-                this.process,
-                INFO);
-
-        message.write(INITIALIZING);
+        AppMessage.write(INITIALIZING, mediaModel, process);
         this.write();
     }
 

@@ -8,7 +8,7 @@ import kennan.co.ke.transcoder_01.core.entity.Media;
 import kennan.co.ke.transcoder_01.core.model.MediaModel;
 
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.*;
-import static kennan.co.ke.transcoder_01.core.entity.LogMessageType.*;
+
 
 public class StreamableHsl extends Transcoder {
 
@@ -29,14 +29,11 @@ public class StreamableHsl extends Transcoder {
     }
 
     private void runCommand() {
-        AppMessage message;
         try {
             Runtime.getRuntime().exec(command()).waitFor();
-            message = new AppMessage(media, process, SUCCESS);
-            message.write(FINALIZING);
+            AppMessage.write(FINALIZING, mediaModel, process);
         } catch (Exception e) {
-            message = new AppMessage(media, process, ERROR);
-            message.write(TERMINATED, e.toString());
+            AppMessage.write(FINALIZING, e.toString(), mediaModel, process);
             throw new RuntimeException(e);
         }
     }

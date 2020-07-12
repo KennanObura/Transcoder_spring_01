@@ -21,8 +21,7 @@ import java.util.stream.Collectors;
 
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.FINALIZING;
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.TERMINATED;
-import static kennan.co.ke.transcoder_01.core.entity.LogMessageType.ERROR;
-import static kennan.co.ke.transcoder_01.core.entity.LogMessageType.SUCCESS;
+
 
 
 public class Sprint extends Transcoder {
@@ -42,19 +41,15 @@ public class Sprint extends Transcoder {
 
     @Override
     public void write() {
-        AppMessage message;
         try {
             List<File> dirContents = getContentsFromDirectory(contentDirectory);
-            if (margeImages(dirContents)) {
-                message = new AppMessage(media, process, SUCCESS);
-                message.write(FINALIZING);
-            } else {
-                message = new AppMessage(media, process, ERROR);
-                message.write(TERMINATED);
-            }
+            if (margeImages(dirContents))
+                AppMessage.write(FINALIZING, mediaModel, process);
+            else
+                AppMessage.write(TERMINATED, mediaModel, process);
+
         } catch (IOException e) {
-            message = new AppMessage(media, process, ERROR);
-            message.write(TERMINATED, e.toString());
+            AppMessage.write(TERMINATED, e.toString(), mediaModel, process);
             e.printStackTrace();
         }
     }
@@ -91,7 +86,7 @@ public class Sprint extends Transcoder {
 
     private static Pair<Integer, Integer> getImageDimension(File file) throws IOException {
         BufferedImage image = ImageIO.read(new File(String.valueOf(file)));
-        return new Pair<Integer, Integer>(image.getWidth(), image.getHeight());
+        return new Pair<>(image.getWidth(), image.getHeight());
     }
 
 

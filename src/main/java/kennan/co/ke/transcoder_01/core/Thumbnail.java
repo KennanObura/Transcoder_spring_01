@@ -9,7 +9,7 @@ import kennan.co.ke.transcoder_01.core.model.MediaModel;
 
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.FINALIZING;
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.TERMINATED;
-import static kennan.co.ke.transcoder_01.core.entity.LogMessageType.*;
+
 
 public class Thumbnail extends Transcoder {
 
@@ -31,16 +31,12 @@ public class Thumbnail extends Transcoder {
 
 
     private void runCommand() {
-        AppMessage message;
-
         try {
             Runtime.getRuntime().exec(singleThumbnailCommand());
             Runtime.getRuntime().exec(streamOfThumbnailCommand()).waitFor();
-            message = new AppMessage(media, process, SUCCESS);
-            message.write(FINALIZING);
+            AppMessage.write(FINALIZING, mediaModel, process);
         } catch (Exception e) {
-            message = new AppMessage(media, process, ERROR);
-            message.write(TERMINATED, e.toString());
+            AppMessage.write(TERMINATED, e.toString(), mediaModel, process);
             throw new RuntimeException(e);
         }
     }

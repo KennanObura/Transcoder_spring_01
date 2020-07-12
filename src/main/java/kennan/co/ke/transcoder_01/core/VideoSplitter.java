@@ -11,8 +11,7 @@ import java.io.IOException;
 
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.FINALIZING;
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.TERMINATED;
-import static kennan.co.ke.transcoder_01.core.entity.LogMessageType.ERROR;
-import static kennan.co.ke.transcoder_01.core.entity.LogMessageType.SUCCESS;
+
 
 
 public class VideoSplitter extends Transcoder {
@@ -28,15 +27,12 @@ public class VideoSplitter extends Transcoder {
 
     @Override
     public void write() {
-        AppMessage message;
         try {
             System.out.println("Running ............................");
-            Runtime.getRuntime().exec(command());
-            message = new AppMessage(media, this.process, SUCCESS);
-            message.write(FINALIZING);
-        } catch (IOException e) {
-            message = new AppMessage(media, this.process, ERROR);
-            message.write(TERMINATED, e.toString());
+            Runtime.getRuntime().exec(command()).waitFor();
+            AppMessage.write(FINALIZING, mediaModel, process);
+        } catch (IOException | InterruptedException e) {
+            AppMessage.write(TERMINATED, e.toString(), mediaModel, process);
             e.printStackTrace();
         }
     }

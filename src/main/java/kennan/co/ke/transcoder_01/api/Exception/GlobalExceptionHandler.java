@@ -23,7 +23,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
             PathNotFoundException.class,
-            ProcessTerminatedException.class
+            ProcessTerminatedException.class,
+            InvalidTimeRangeException.class
     })
     @Nullable
     public final ResponseEntity<ApiError> handleException(Exception ex, WebRequest request) {
@@ -34,7 +35,7 @@ public class GlobalExceptionHandler {
         if (ex instanceof PathNotFoundException) {
             HttpStatus status = HttpStatus.NOT_FOUND;
             PathNotFoundException unfe = (PathNotFoundException) ex;
-            return handlePathNotFoundException(unfe, headers, status, request);
+            return handleCustomException(unfe, headers, status, request);
 
 
         } else if (ex instanceof ProcessTerminatedException) {
@@ -43,9 +44,9 @@ public class GlobalExceptionHandler {
             return handleProcessTerminatedException(cnae, headers, status, request);
 
         }else if(ex instanceof InvalidTimeRangeException) {
-            HttpStatus status = HttpStatus.BAD_REQUEST;
+            HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
             InvalidTimeRangeException cnae = (InvalidTimeRangeException) ex;
-            return handleInvalidTimeRangeException(cnae, headers, status, request);
+            return handleCustomException(cnae, headers, status, request);
 
         } else {
             if (LOGGER.isWarnEnabled()) {
@@ -66,12 +67,13 @@ public class GlobalExceptionHandler {
      * @param status The selected response status
      * @return a {@code ResponseEntity} instance
      */
-    protected ResponseEntity<ApiError> handlePathNotFoundException(
-            PathNotFoundException ex,
+    protected ResponseEntity<ApiError> handleCustomException(
+            Exception ex,
             HttpHeaders headers,
             HttpStatus status,
             WebRequest request) {
         List<String> errors = Collections.singletonList(ex.getMessage());
+        System.out.println( ex + "thrown");
         return handleExceptionInternal(ex, new ApiError(errors), headers, status, request);
     }
 
@@ -100,27 +102,6 @@ public class GlobalExceptionHandler {
 
 
 
-    /**
-     * Customize the response for ProcessTerminatedException.
-     *
-     * @param ex The exception
-     * @param headers The headers to be written to the response
-     * @param status The selected response status
-     * @return a {@code ResponseEntity} instance
-     */
-    protected ResponseEntity<ApiError> handleInvalidTimeRangeException(
-            InvalidTimeRangeException ex,
-            HttpHeaders headers,
-            HttpStatus status,
-            WebRequest request) {
-
-        List<String> errorMessages = ex.getErrors()
-                .stream()
-                .map(contentError -> contentError.getObjectName() + " " + contentError.getDefaultMessage())
-                .collect(Collectors.toList());
-
-        return handleExceptionInternal(ex, new ApiError(errorMessages), headers, status, request);
-    }
 
 
     /**

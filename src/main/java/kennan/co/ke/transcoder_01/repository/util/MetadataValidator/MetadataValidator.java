@@ -1,6 +1,7 @@
 package kennan.co.ke.transcoder_01.repository.util.MetadataValidator;
 
 import javafx.util.Pair;
+import kennan.co.ke.transcoder_01.api.Exception.InvalidTimeRangeException;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 
 import java.io.BufferedReader;
@@ -24,13 +25,16 @@ public class MetadataValidator implements InterfaceMetadataValidator {
 
 
     @Override
-    public boolean isTimeRangeValid(Pair<String, String> range) throws ParseException, IOException {
+    public boolean isTimeRangeValid(Pair<String, String> range) throws ParseException, IOException, InvalidTimeRangeException {
 
-        if (range.getKey().isEmpty() || range.getValue().isEmpty())
-            throw new ParseException("Empty starttime or endtime", 1);
+        if (range.getKey().isEmpty() || range.getValue().isEmpty()) {
+            throw InvalidTimeRangeException.createWith("Empty starttime or endtime");
+        }
 
-        if (!isValidFormat(range.getKey()) || !isValidFormat(range.getValue()))
-            throw new ParseException("Time specified is out of range", 1);
+        if (!isValidFormat(range.getKey()) || !isValidFormat(range.getValue())) {
+            System.out.println(range.toString() + "===========================");
+            throw  InvalidTimeRangeException.createWith("Invalid time format, provide in [hh:mm:ss]");
+        }
 
         DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
         Date startTime = dateFormat.parse(range.getKey());
@@ -54,9 +58,9 @@ public class MetadataValidator implements InterfaceMetadataValidator {
 
 
     private String checker() throws IOException {
+
         String cmd = "ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "
                 + media.getDirectory() + media.getName() + " -sexagesimal";
-
 
             Process result = Runtime.getRuntime().exec(cmd.split(" "));
 

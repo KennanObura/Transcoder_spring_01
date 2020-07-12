@@ -1,21 +1,15 @@
 package kennan.co.ke.transcoder_01.api.Exception;
 
-import org.springframework.validation.ObjectError;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.List;
+@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE, reason = "Time Range Not Valid") //404
+public class InvalidTimeRangeException extends Exception {
 
-public class InvalidTimeRangeException extends Exception{
-    private final List<ObjectError> errors;
-
-    public static InvalidTimeRangeException createWith(List<ObjectError> errors) {
-        return new InvalidTimeRangeException(errors);
+    public static InvalidTimeRangeException createWith(String time) {
+        return new InvalidTimeRangeException(time);
     }
-
-    public InvalidTimeRangeException(List<ObjectError> errors) {
-        this.errors = errors;
-    }
-
-    public List<ObjectError> getErrors() {
-        return errors;
+    private InvalidTimeRangeException(String time) {
+        super("InvalidTimeRangeException with " + time);
     }
 }

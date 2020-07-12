@@ -14,42 +14,44 @@ import kennan.co.ke.transcoder_01.core.util.ActivityLogger;
  */
 
 public class AppMessage {
-    public AppMessage(
-            Media media,
-            AppProcess process,
-            LogMessageType messageType) {
-        this.process = process;
-        this.messageType = messageType;
-        this.media = media;
+
+    public static void write(AppEvent event, MediaModel media, AppProcess process) {
+        dumpToLogger(whichEvent(event, media, process), whichTypeOfMessage(event));
     }
 
+    public static void write(AppEvent event, String exceptionString, MediaModel media, AppProcess process) {
+        dumpToLogger(whichEvent(event, media, process) + exceptionString, whichTypeOfMessage(event));
+    }
 
-    private final AppProcess process;
-    private final LogMessageType messageType;
-    private final Media media;
+    public static void write(AppEvent event, String exceptionString, Media media) {
+        dumpToLogger(exceptionString, whichTypeOfMessage(event));
+    }
 
-    private String whichEvent(AppEvent event) {
+    private static String whichEvent(AppEvent event, MediaModel media, AppProcess process) {
         switch (event) {
             case TERMINATED:
-                return "Process " + this.process + " of " + media.getName() + " terminated :- ";
+                return "Process " + process + " of " + media.getMedia().getName() + " terminated :- ";
             case INPROGRESS:
-                return "Process " + this.process + " of " + media.getName() + " in progress...";
+                return "Process " + process + " of " + media.getMedia().getName() + " in progress...";
             case FINALIZING:
-                return "Finalizing " + this.process + " of " + media.getName() + ". files written to /" + media.getDirectory();
+                return "Finalizing " + process + " of " + media.getMedia().getName() + ". files written to /" + media.getMasterDirectory();
             default:
-                return "Generating " + this.process + " of " + media.getName();
+                return "Generating " + process + " of " + media.getMedia().getName();
         }
     }
 
-    public void write(AppEvent event) {
-        dumpToLogger(whichEvent(event));
+    private static LogMessageType whichTypeOfMessage(AppEvent event) {
+        switch (event) {
+            case FINALIZING:
+                return LogMessageType.SUCCESS;
+            case TERMINATED:
+                return LogMessageType.ERROR;
+            default:
+                return LogMessageType.INFO;
+        }
     }
 
-    public void write(AppEvent event, String exceptionString) {
-        dumpToLogger(whichEvent(event) + exceptionString);
-    }
-
-    private void dumpToLogger(String message) {
+    private static void dumpToLogger(String message, LogMessageType messageType) {
         ActivityLogger activityLogger = new ActivityLogger(message, messageType);
         activityLogger.run();
     }

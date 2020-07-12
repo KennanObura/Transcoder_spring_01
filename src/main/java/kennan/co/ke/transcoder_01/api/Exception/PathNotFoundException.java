@@ -1,21 +1,14 @@
 package kennan.co.ke.transcoder_01.api.Exception;
 
-import org.springframework.validation.ObjectError;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.List;
-
-public class PathNotFoundException extends Exception{
-    private final List<ObjectError> errors;
-
-    public static PathNotFoundException createWith(List<ObjectError> errors) {
-        return new PathNotFoundException(errors);
+@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Path Provided Not Valid") //404
+public class PathNotFoundException extends Exception {
+    public static PathNotFoundException createWith(String pathToFile) {
+        return new PathNotFoundException(pathToFile);
     }
-
-    private PathNotFoundException(List<ObjectError> errors) {
-        this.errors = errors;
-    }
-
-    public List<ObjectError> getErrors() {
-        return errors;
+    private PathNotFoundException(String pathToFile) {
+        super("PathNotFoundException with " + pathToFile);
     }
 }
