@@ -1,7 +1,7 @@
 package kennan.co.ke.transcoder_01.core;
 
 
-import kennan.co.ke.transcoder_01.core.base.Transcoder;
+import kennan.co.ke.transcoder_01.core.base.AbstractTranscoderService;
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.Media;
@@ -10,14 +10,19 @@ import kennan.co.ke.transcoder_01.core.model.MediaModel;
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.*;
 
 
-public class StreamableHsl extends Transcoder {
+public class StreamableHslService extends AbstractTranscoderService {
 
 
-    public StreamableHsl(MediaModel mediaModel) {
+    private StreamableHslService(MediaModel mediaModel) {
         super(mediaModel);
         super.process = AppProcess.STREAMABLEHSL;
-        this.createDirectory(mediaModel.getMasterDirectory());
     }
+
+
+    public static AbstractTranscoderService create(MediaModel mediaModel){
+        return new StreamableHslService(mediaModel);
+    }
+
 
 
     private final Media media = mediaModel.getMedia();
@@ -27,6 +32,7 @@ public class StreamableHsl extends Transcoder {
     public void write() {
         this.runCommand();
     }
+
 
     private void runCommand() {
         try {

@@ -9,13 +9,19 @@ import java.io.*;
  * A worker class responsible for writing a log file
  */
 public class ActivityLogger {
-    public ActivityLogger(
+    private ActivityLogger(
             String message,
             LogMessageType messageType) {
         this.message = message;
         this.messageType = messageType;
     }
 
+
+    public static ActivityLogger createWith(
+            String message,
+            LogMessageType messageType) {
+        return new ActivityLogger(message, messageType);
+    }
 
     private final LogMessageType messageType;
     private final String message;
@@ -75,8 +81,8 @@ public class ActivityLogger {
     public static void main(String[] args) {
 
         String message = "Oho yes, works like charm";
-        ActivityLogger log = new ActivityLogger(message, LogMessageType.SUCCESS);
-        log.run();
+        ActivityLogger.createWith(message, LogMessageType.SUCCESS)
+                .run();
 
         System.out.println();
     }

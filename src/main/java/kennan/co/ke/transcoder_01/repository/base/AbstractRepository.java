@@ -11,7 +11,7 @@ import java.text.ParseException;
 
 public abstract class AbstractRepository implements BaseRepository {
 
-    @Bean
+
     @Override
     public abstract void dispatch(Media media, String ...params) throws
             InterruptedException,

@@ -1,5 +1,6 @@
 package kennan.co.ke.transcoder_01.core.base;
 
+
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.model.MediaModel;
@@ -8,17 +9,18 @@ import kennan.co.ke.transcoder_01.core.util.OSValidator;
 import java.io.File;
 
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.INITIALIZING;
-import static kennan.co.ke.transcoder_01.core.entity.LogMessageType.INFO;
 
-public abstract class Transcoder
+
+public abstract class AbstractTranscoderService
         implements
         TranscoderInterface,
         Runnable {
 
-    public Transcoder(MediaModel mediaModel) {
+    public AbstractTranscoderService(MediaModel mediaModel) {
         this.mediaModel = mediaModel;
         this.file = new File(this.mediaModel.getMedia().getName());
         this.createDirectory(this.mediaModel.getMedia().getDirectory());
+        this.createDirectory(mediaModel.getMasterDirectory());
     }
 
     public final MediaModel mediaModel;
@@ -29,6 +31,7 @@ public abstract class Transcoder
 
     @Override
     abstract public void write();
+
 
 
     @Override

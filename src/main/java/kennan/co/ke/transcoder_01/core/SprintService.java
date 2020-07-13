@@ -2,7 +2,7 @@ package kennan.co.ke.transcoder_01.core;
 
 
 import javafx.util.Pair;
-import kennan.co.ke.transcoder_01.core.base.Transcoder;
+import kennan.co.ke.transcoder_01.core.base.AbstractTranscoderService;
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.Media;
@@ -24,19 +24,22 @@ import static kennan.co.ke.transcoder_01.core.entity.AppEvent.TERMINATED;
 
 
 
-public class Sprint extends Transcoder {
+public class SprintService extends AbstractTranscoderService {
 
 
-    public Sprint(MediaModel mediaModel) {
+    private SprintService(MediaModel mediaModel) {
         super(mediaModel);
         super.process = AppProcess.SPRINT;
-        this.createDirectory(mediaModel.getMasterDirectory());
     }
 
     final private static int SPRINT_HEIGHT = 108;
     final private static int SPRINT_WIDTH = 192;
-    final private Media media = mediaModel.getMedia();
     final private String contentDirectory = mediaModel.getMedia().getDirectory() + "thumbnails";
+
+
+    public static AbstractTranscoderService create(MediaModel mediaModel){
+        return new SprintService(mediaModel);
+    }
 
 
     @Override

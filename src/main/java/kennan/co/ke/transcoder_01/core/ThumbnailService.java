@@ -1,7 +1,7 @@
 package kennan.co.ke.transcoder_01.core;
 
 
-import kennan.co.ke.transcoder_01.core.base.Transcoder;
+import kennan.co.ke.transcoder_01.core.base.AbstractTranscoderService;
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.Media;
@@ -11,15 +11,17 @@ import static kennan.co.ke.transcoder_01.core.entity.AppEvent.FINALIZING;
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.TERMINATED;
 
 
-public class Thumbnail extends Transcoder {
+public class ThumbnailService extends AbstractTranscoderService {
 
 
-    public Thumbnail(MediaModel mediaModel) {
+    private ThumbnailService(MediaModel mediaModel) {
         super(mediaModel);
         super.process = AppProcess.THUMBNAIL;
-        this.createDirectory(mediaModel.getMasterDirectory());
     }
 
+    public static AbstractTranscoderService create(MediaModel mediaModel){
+        return new ThumbnailService(mediaModel);
+    }
 
     final private Media media = mediaModel.getMedia();
 

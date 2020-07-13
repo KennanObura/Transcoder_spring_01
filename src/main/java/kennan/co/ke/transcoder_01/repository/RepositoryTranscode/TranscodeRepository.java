@@ -1,9 +1,9 @@
 package kennan.co.ke.transcoder_01.repository.RepositoryTranscode;
 
 import kennan.co.ke.transcoder_01.api.Exception.PathNotFoundException;
-import kennan.co.ke.transcoder_01.core.Sprint;
-import kennan.co.ke.transcoder_01.core.StreamableHsl;
-import kennan.co.ke.transcoder_01.core.Thumbnail;
+import kennan.co.ke.transcoder_01.core.SprintService;
+import kennan.co.ke.transcoder_01.core.StreamableHslService;
+import kennan.co.ke.transcoder_01.core.ThumbnailService;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 import kennan.co.ke.transcoder_01.core.model.MediaModel;
 import kennan.co.ke.transcoder_01.repository.base.AbstractRepository;
@@ -41,17 +41,17 @@ public class TranscodeRepository
         hslContainer.setMasterDirectory(media.getDirectory() + "hsl");
 
 
-        Thread hslGeneratorThread = new Thread(new StreamableHsl(hslContainer));
+        Thread hslGeneratorThread = new Thread(StreamableHslService.create(hslContainer));
         hslGeneratorThread.start();
 
 
-        Thread thumbnailGeneratorThread = new Thread(new Thumbnail(thumbnailContainer));
+        Thread thumbnailGeneratorThread = new Thread(ThumbnailService.create(thumbnailContainer));
         thumbnailGeneratorThread.start();
 
 
         thumbnailGeneratorThread.join();
 
-        Thread sprintGeneratorThread = new Thread(new Sprint(sprintContainer));
+        Thread sprintGeneratorThread = new Thread(SprintService.create(sprintContainer));
         sprintGeneratorThread.start();
     }
 

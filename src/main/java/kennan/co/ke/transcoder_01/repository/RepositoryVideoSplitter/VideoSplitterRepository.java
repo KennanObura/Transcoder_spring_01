@@ -6,7 +6,7 @@ import kennan.co.ke.transcoder_01.api.Exception.PathNotFoundException;
 import kennan.co.ke.transcoder_01.core.model.MediaModel;
 import kennan.co.ke.transcoder_01.repository.base.AbstractRepository;
 import kennan.co.ke.transcoder_01.repository.util.MetadataValidator.MetadataValidator;
-import kennan.co.ke.transcoder_01.core.VideoSplitter;
+import kennan.co.ke.transcoder_01.core.VideoSplitterService;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 
 
@@ -47,8 +47,7 @@ public class VideoSplitterRepository extends AbstractRepository
     @Override
     public boolean isInputValid(Media media, Pair<String, String> metadata) throws
             InvalidTimeRangeException, IOException, ParseException {
-        final MetadataValidator metadataValidator = new MetadataValidator(media);
-        return metadataValidator.isTimeRangeValid(metadata);
+        return MetadataValidator.isTimeRangeValid(media, metadata);
     }
 
 
@@ -56,7 +55,8 @@ public class VideoSplitterRepository extends AbstractRepository
         final MediaModel mediaModel = new MediaModel(media, params[0], params[1], params[2]);
         mediaModel.setMasterDirectory(media.getDirectory() + "chunks/");
         mediaModel.setOutputDirectory(mediaModel.getMasterDirectory() + "split_[" + params[2] + "]_" + media.getName());
-        Thread splitGeneratorThread = new Thread(new VideoSplitter(mediaModel));
+
+        Thread splitGeneratorThread = new Thread(VideoSplitterService.create(mediaModel));
         splitGeneratorThread.start();
     }
 }

@@ -52,7 +52,6 @@ public class AppMessage {
     }
 
     private static void dumpToLogger(String message, LogMessageType messageType) {
-        ActivityLogger activityLogger = new ActivityLogger(message, messageType);
-        activityLogger.run();
+        ActivityLogger.createWith(message, messageType).run();
     }
 }

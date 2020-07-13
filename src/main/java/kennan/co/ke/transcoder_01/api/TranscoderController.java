@@ -1,21 +1,21 @@
 package kennan.co.ke.transcoder_01.api;
 
-import kennan.co.ke.transcoder_01.api.Error.ApiError;
+import kennan.co.ke.transcoder_01.DI.DIConfiguration;
 import kennan.co.ke.transcoder_01.api.Exception.PathNotFoundException;
-import kennan.co.ke.transcoder_01.api.Exception.ProcessTerminatedException;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 import kennan.co.ke.transcoder_01.repository.RepositoryTranscode.TranscodeRepository;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
-public class TranscoderController  {
+public class TranscoderController {
 
-    private final TranscodeRepository repository = new TranscodeRepository();
+    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DIConfiguration.class);
+    private final TranscodeRepository repository = context.getBean(TranscodeRepository.class);
 
     @PostMapping("/")
     @ResponseBody
@@ -26,15 +26,4 @@ public class TranscoderController  {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-
-
-    @ExceptionHandler(ProcessTerminatedException.class)
-    public ResponseEntity<ApiError> handleProcessTerminatedException(ProcessTerminatedException exception) {
-        List<String> errorMessages = exception.getErrors()
-                .stream()
-                .map(contentError -> contentError.getObjectName() + " " + contentError.getDefaultMessage())
-                .collect(Collectors.toList());
-
-        return new ResponseEntity<>(new ApiError(errorMessages), HttpStatus.BAD_REQUEST);
-    }
 }
