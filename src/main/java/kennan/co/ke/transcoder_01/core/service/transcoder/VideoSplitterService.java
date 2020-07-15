@@ -42,7 +42,7 @@ public class VideoSplitterService extends AbstractTranscoderService {
 
     private String[] command() {
         String[] command = new String[11];
-        command[0] = ffmpegPath;
+        command[0] = getFfmpegPath();
         command[1] = "-t";
         command[2] = mediaModel.getEndTime();
         command[3] = "-i";

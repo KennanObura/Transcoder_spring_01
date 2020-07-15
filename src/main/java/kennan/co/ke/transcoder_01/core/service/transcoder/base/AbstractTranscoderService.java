@@ -26,12 +26,17 @@ public abstract class AbstractTranscoderService
     public final MediaModel mediaModel;
     public final File file;
     public AppProcess process;
-    public final static String ffmpegPath = "/usr/bin/ffmpeg";
 
 
     @Override
     abstract public void write();
 
+
+    public String getFfmpegPath() {
+        if (getCurrentEnvironment().equals("uni"))
+            return "/usr/bin/ffmpeg";
+        else return "C:\\ffmpeg\\bin\\ffmpeg";
+    }
 
 
     @Override

@@ -46,7 +46,7 @@ public class ThumbnailService extends AbstractTranscoderService {
 
     private String[] singleThumbnailCommand() {
         String[] cmd = new String[9];
-        cmd[0] = ffmpegPath;
+        cmd[0] = getFfmpegPath();
         cmd[1] = "-i";
         cmd[2] = this.media.getDirectory() + this.media.getName();
         cmd[3] = "-ss";
@@ -61,7 +61,7 @@ public class ThumbnailService extends AbstractTranscoderService {
 
     private String[] streamOfThumbnailCommand() {
         String[] cmd = new String[7];
-        cmd[0] = ffmpegPath;
+        cmd[0] = getFfmpegPath();
         cmd[1] = "-i";
         cmd[2] = media.getDirectory() + media.getName();
         cmd[3] = "-vf";

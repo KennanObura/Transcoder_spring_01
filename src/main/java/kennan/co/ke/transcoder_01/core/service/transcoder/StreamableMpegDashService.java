@@ -43,7 +43,7 @@ public class StreamableMpegDashService extends AbstractTranscoderService {
 
     private String[] command() {
         String[] command = new String[46];
-        command[0] = ffmpegPath;
+        command[0] = getFfmpegPath();
         command[1] = "-y";
         command[2] = "-i";
         command[3] = media.getDirectory() + media.getName();
