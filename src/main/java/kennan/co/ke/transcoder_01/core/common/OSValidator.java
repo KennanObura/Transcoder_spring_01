@@ -1,4 +1,4 @@
-package kennan.co.ke.transcoder_01.core.util;
+package kennan.co.ke.transcoder_01.core.common;
 
 public class OSValidator {
     private static String OS = System.getProperty("os.name").toLowerCase();

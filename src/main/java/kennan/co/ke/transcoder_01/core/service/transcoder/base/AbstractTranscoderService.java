@@ -1,10 +1,10 @@
-package kennan.co.ke.transcoder_01.core.base;
+package kennan.co.ke.transcoder_01.core.service.transcoder.base;
 
 
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.model.MediaModel;
-import kennan.co.ke.transcoder_01.core.util.OSValidator;
+import kennan.co.ke.transcoder_01.core.common.OSValidator;
 
 import java.io.File;
 

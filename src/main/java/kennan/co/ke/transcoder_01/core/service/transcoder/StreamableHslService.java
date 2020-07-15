@@ -1,7 +1,7 @@
-package kennan.co.ke.transcoder_01.core;
+package kennan.co.ke.transcoder_01.core.service.transcoder;
 
 
-import kennan.co.ke.transcoder_01.core.base.AbstractTranscoderService;
+import kennan.co.ke.transcoder_01.core.service.transcoder.base.AbstractTranscoderService;
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.Media;

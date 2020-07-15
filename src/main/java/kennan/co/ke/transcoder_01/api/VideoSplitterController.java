@@ -18,8 +18,13 @@ import java.text.ParseException;
 @RestController
 public class VideoSplitterController {
 
-    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DIConfiguration.class);
-    private final VideoSplitterRepository repository = context.getBean(VideoSplitterRepository.class);
+
+    private VideoSplitterController() {
+        this.repository = (new AnnotationConfigApplicationContext(DIConfiguration.class))
+                .getBean(VideoSplitterRepository.class);
+    }
+
+    private final VideoSplitterRepository repository;
 
 
     @PostMapping(

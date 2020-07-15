@@ -3,7 +3,7 @@ package kennan.co.ke.transcoder_01.DI;
 import kennan.co.ke.transcoder_01.repository.RepositoryTranscode.TranscodeRepository;
 import kennan.co.ke.transcoder_01.repository.RepositoryVideoSplitter.VideoSplitterRepository;
 import kennan.co.ke.transcoder_01.repository.base.AbstractRepository;
-import kennan.co.ke.transcoder_01.repository.util.MetadataValidator.MetadataValidator;
+import kennan.co.ke.transcoder_01.repository.common.MetadataValidator.MetadataValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

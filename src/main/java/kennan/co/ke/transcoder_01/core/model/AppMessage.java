@@ -4,7 +4,7 @@ import kennan.co.ke.transcoder_01.core.entity.AppEvent;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.LogMessageType;
 import kennan.co.ke.transcoder_01.core.entity.Media;
-import kennan.co.ke.transcoder_01.core.util.ActivityLogger;
+import kennan.co.ke.transcoder_01.core.common.ActivityLogger;
 
 
 /**

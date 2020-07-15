@@ -3,8 +3,7 @@ package kennan.co.ke.transcoder_01.repository.base;
 import kennan.co.ke.transcoder_01.api.Exception.InvalidTimeRangeException;
 import kennan.co.ke.transcoder_01.api.Exception.PathNotFoundException;
 import kennan.co.ke.transcoder_01.core.entity.Media;
-import kennan.co.ke.transcoder_01.repository.util.PathValidator.PathValidator;
-import org.springframework.context.annotation.Bean;
+import kennan.co.ke.transcoder_01.repository.common.PathValidator.PathValidator;
 
 import java.io.IOException;
 import java.text.ParseException;

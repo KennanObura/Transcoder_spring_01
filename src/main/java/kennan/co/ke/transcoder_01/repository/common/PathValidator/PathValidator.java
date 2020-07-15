@@ -1,4 +1,4 @@
-package kennan.co.ke.transcoder_01.repository.util.PathValidator;
+package kennan.co.ke.transcoder_01.repository.common.PathValidator;
 
 import java.io.File;
 

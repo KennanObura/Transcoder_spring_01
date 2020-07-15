@@ -10,12 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
 @RestController
 public class TranscoderController {
 
-    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DIConfiguration.class);
-    private final TranscodeRepository repository = context.getBean(TranscodeRepository.class);
+    private TranscoderController() {
+        this.repository = (new AnnotationConfigApplicationContext(DIConfiguration.class))
+                .getBean(TranscodeRepository.class);
+    }
+
+    private final TranscodeRepository repository;
 
     @PostMapping("/")
     @ResponseBody

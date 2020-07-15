@@ -1,4 +1,4 @@
-package kennan.co.ke.transcoder_01.repository.util.MetadataValidator;
+package kennan.co.ke.transcoder_01.repository.common.MetadataValidator;
 
 import javafx.util.Pair;
 import kennan.co.ke.transcoder_01.api.Exception.InvalidTimeRangeException;

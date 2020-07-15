@@ -1,4 +1,4 @@
-package kennan.co.ke.transcoder_01.core.util;
+package kennan.co.ke.transcoder_01.core.common;
 
 import kennan.co.ke.transcoder_01.core.entity.LogMessageType;
 

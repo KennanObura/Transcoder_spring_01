@@ -1,11 +1,10 @@
-package kennan.co.ke.transcoder_01.core;
+package kennan.co.ke.transcoder_01.core.service.transcoder;
 
 
 import javafx.util.Pair;
-import kennan.co.ke.transcoder_01.core.base.AbstractTranscoderService;
+import kennan.co.ke.transcoder_01.core.service.transcoder.base.AbstractTranscoderService;
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
-import kennan.co.ke.transcoder_01.core.entity.Media;
 import kennan.co.ke.transcoder_01.core.model.MediaModel;
 
 import javax.imageio.ImageIO;
@@ -60,7 +59,8 @@ public class SprintService extends AbstractTranscoderService {
 
     private boolean margeImages(List<File> dirContents) throws IOException {
         BufferedImage tempImage = new BufferedImage(
-                SPRINT_WIDTH, SPRINT_HEIGHT * dirContents.size(), //work these out
+                SPRINT_WIDTH,
+                SPRINT_HEIGHT * dirContents.size(), //work these out
                 BufferedImage.TYPE_INT_RGB);
         Graphics graphics = tempImage.getGraphics();
 

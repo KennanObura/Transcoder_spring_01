@@ -1,9 +1,9 @@
 package kennan.co.ke.transcoder_01.repository.RepositoryTranscode;
 
 import kennan.co.ke.transcoder_01.api.Exception.PathNotFoundException;
-import kennan.co.ke.transcoder_01.core.SprintService;
-import kennan.co.ke.transcoder_01.core.StreamableHslService;
-import kennan.co.ke.transcoder_01.core.ThumbnailService;
+import kennan.co.ke.transcoder_01.core.service.transcoder.SprintService;
+import kennan.co.ke.transcoder_01.core.service.transcoder.StreamableHslService;
+import kennan.co.ke.transcoder_01.core.service.transcoder.ThumbnailService;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 import kennan.co.ke.transcoder_01.core.model.MediaModel;
 import kennan.co.ke.transcoder_01.repository.base.AbstractRepository;
