@@ -45,7 +45,7 @@ public class ThumbnailService extends AbstractTranscoderService {
 
 
     private String[] singleThumbnailCommand() {
-        String[] cmd = new String[9];
+        String[] cmd = new String[11];
         cmd[0] = getFfmpegPath();
         cmd[1] = "-i";
         cmd[2] = this.media.getDirectory() + this.media.getName();
@@ -53,21 +53,25 @@ public class ThumbnailService extends AbstractTranscoderService {
         cmd[4] = "00:00:14.435";
         cmd[5] = "-vframes";
         cmd[6] = "1";
-        cmd[7] = mediaModel.getOutputDirectory();
-        cmd[8] = "-report";
+        cmd[7] = "-s";
+        cmd[8] = "1280x720";
+        cmd[9] = mediaModel.getOutputDirectory();
+        cmd[10] = "-report";
         return cmd;
     }
 
 
     private String[] streamOfThumbnailCommand() {
-        String[] cmd = new String[7];
+        String[] cmd = new String[9];
         cmd[0] = getFfmpegPath();
         cmd[1] = "-i";
         cmd[2] = media.getDirectory() + media.getName();
         cmd[3] = "-vf";
-        cmd[4] = "fps=1";
-        cmd[5] = mediaModel.getMasterDirectory() + "pic%d.png";
-        cmd[6] = "-report";
+        cmd[4] = "fps=1/10";
+        cmd[5] = "-s";
+        cmd[6] = "192x108";
+        cmd[7] = mediaModel.getMasterDirectory() + "pic%d.png";
+        cmd[8] = "-report";
         return cmd;
     }
 }

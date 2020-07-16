@@ -28,6 +28,7 @@ public abstract class AbstractTranscoderService
     public AppProcess process;
 
 
+
     @Override
     abstract public void write();
 
@@ -42,6 +43,7 @@ public abstract class AbstractTranscoderService
     @Override
     public void run() {
         AppMessage.write(INITIALIZING, mediaModel, process);
+        System.out.println("Thread "+ Thread.currentThread().getName() + " of service " + process);
         this.write();
     }
 
