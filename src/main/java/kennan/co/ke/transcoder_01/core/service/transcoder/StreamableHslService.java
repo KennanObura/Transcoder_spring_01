@@ -39,7 +39,7 @@ public class StreamableHslService extends AbstractTranscoderService {
             Runtime.getRuntime().exec(command()).waitFor();
             AppMessage.write(FINALIZING, mediaModel, process);
         } catch (Exception e) {
-            AppMessage.write(FINALIZING, e.toString(), mediaModel, process);
+            AppMessage.write(TERMINATED, e.toString(), mediaModel, process);
             throw new RuntimeException(e);
         }
     }

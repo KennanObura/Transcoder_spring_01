@@ -60,7 +60,7 @@ public class SprintService extends AbstractTranscoderService {
     private boolean margeImages(List<File> dirContents) throws IOException {
         BufferedImage tempImage = new BufferedImage(
                 SPRINT_WIDTH,
-                SPRINT_HEIGHT * dirContents.size(), //work these out
+                (SPRINT_HEIGHT +1 ) * dirContents.size(), //work these out
                 BufferedImage.TYPE_INT_RGB);
         Graphics graphics = tempImage.getGraphics();
 
@@ -82,7 +82,7 @@ public class SprintService extends AbstractTranscoderService {
 
 
     private static Pair<Integer, Integer> indexToCoordinates(int index) {
-        int y = (SPRINT_HEIGHT + 1) * (index - 1);
+        int y = (SPRINT_HEIGHT + 1) * index;
         return new Pair<>(0, y);
     }
 
