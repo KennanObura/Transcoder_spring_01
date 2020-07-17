@@ -31,19 +31,14 @@ public class DirectoryCleanerRepository implements InterfaceDirectoryCleaner {
 
     @Override
     public BatchProcessService run() throws IOException {
-        int count = 0;
         for (Project project : projects.getProjects()) {
             if (project.getContents() != null) {
                 for (Content content : project.getContents())
                     if (content.getMediaList() != null)
-                        for (TempMedia media : content.getMediaList()) {
-                            count++;
-                            if (count > 10 && count < 20) {
-                                log.info(" Max queue capacity not reached " + count);
+                        for (TempMedia media : content.getMediaList())
+                            configureDirectoryMapperAndPutToQueue(project, content, media);
 
-                                configureDirectoryMapperAndPutToQueue(project, content, media);
-                            }
-                        }
+
             }
         }
         return startBatchProcessService();
