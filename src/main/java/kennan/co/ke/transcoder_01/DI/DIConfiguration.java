@@ -1,16 +1,20 @@
 package kennan.co.ke.transcoder_01.DI;
 
-import kennan.co.ke.transcoder_01.repository.DirectoryManager.DirectoryManagerRepository;
 import kennan.co.ke.transcoder_01.repository.RepositoryTranscode.TranscodeRepository;
 import kennan.co.ke.transcoder_01.repository.RepositoryVideoSplitter.VideoSplitterRepository;
 import kennan.co.ke.transcoder_01.repository.base.AbstractRepository;
 import kennan.co.ke.transcoder_01.repository.common.MetadataValidator.MetadataValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.InjectionPoint;
+import org.slf4j.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.core.MethodParameter;
+
+import java.lang.reflect.Field;
+
+import static java.util.Optional.*;
 
 @Configuration
 @ComponentScan
@@ -31,8 +35,10 @@ public class DIConfiguration {
     public MetadataValidator metadataValidator() {return new MetadataValidator(); }
 
     @Bean
-    public  Logger log () {
-        return LoggerFactory.getLogger(ApplicationContext.class);
+    @Scope("prototype")
+    public Logger produceLogger(InjectionPoint injectionPoint) {
+        Class<?> classOnWired = injectionPoint.getMember().getDeclaringClass();
+        return LoggerFactory.getLogger(classOnWired);
     }
 
 //    @Bean

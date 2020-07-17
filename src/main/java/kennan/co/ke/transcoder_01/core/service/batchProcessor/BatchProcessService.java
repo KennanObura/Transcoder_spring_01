@@ -4,7 +4,6 @@ import kennan.co.ke.transcoder_01.DI.DIConfiguration;
 import kennan.co.ke.transcoder_01.api.Exception.PathNotFoundException;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 import kennan.co.ke.transcoder_01.core.model.DirectoryMapper;
-import kennan.co.ke.transcoder_01.core.service.directoryManager.DirectoryManagerService;
 import kennan.co.ke.transcoder_01.repository.RepositoryTranscode.TranscodeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +17,7 @@ import java.util.Queue;
 public class BatchProcessService {
 
     private BatchProcessService(Queue<DirectoryMapper> mappers) {
+        log.info(" Batch process created ==========");
         this.mappers = mappers;
     }
 
@@ -31,7 +31,9 @@ public class BatchProcessService {
         return new BatchProcessService(mappers);
     }
 
-    public void process() throws IOException {
+    public void then() throws IOException {
+
+        log.debug(" Mappers in Batch " + mappers.size());
         while (!mappers.isEmpty()){
             DirectoryMapper mapper = mappers.remove();
 
@@ -87,7 +89,7 @@ public class BatchProcessService {
                 "C:\\Apache24\\mediafilesystem\\P010556\\104\\video\\170"));
 
         try {
-            BatchProcessService.createWithMappers(queue).process();
+            BatchProcessService.createWithMappers(queue).then();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -3,7 +3,7 @@ package kennan.co.ke.transcoder_01.api;
 
 
 import kennan.co.ke.transcoder_01.core.model.ProjectModel;
-import kennan.co.ke.transcoder_01.repository.DirectoryManager.DirectoryManagerRepository;
+import kennan.co.ke.transcoder_01.repository.DirectoryCleaner.DirectoryCleanerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -26,10 +26,9 @@ public class FakeRestController implements CommandLineRunner {
         log.info("==== RESTful API Response using Spring RESTTemplate START =======");
         assert projects != null;
 
-        DirectoryManagerRepository repository = DirectoryManagerRepository.createWithProjects(projects);
-                repository.run();
-//                repository.then();
-                repository.finaly();
+        DirectoryCleanerRepository.createWithProjects(projects)
+                .run()
+                .then();
 
 
         log.info(projects.toString());

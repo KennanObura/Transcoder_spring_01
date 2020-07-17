@@ -1,7 +1,6 @@
-package kennan.co.ke.transcoder_01.core.service.directoryManager;
+package kennan.co.ke.transcoder_01.core.service.directoryCleaner;
 
 
-import kennan.co.ke.transcoder_01.api.FakeRestController;
 import kennan.co.ke.transcoder_01.core.model.DirectoryMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,16 +14,16 @@ import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class DirectoryManagerService {
+public class DirectoryCleanerService {
     private final Queue<DirectoryMapper> mappers;
-    private static final Logger log = LoggerFactory.getLogger(DirectoryManagerService.class);
+    private static final Logger log = LoggerFactory.getLogger(DirectoryCleanerService.class);
 
-    private DirectoryManagerService(Queue<DirectoryMapper> mappers) {
+    private DirectoryCleanerService(Queue<DirectoryMapper> mappers) {
         this.mappers = mappers;
     }
 
-    public static DirectoryManagerService create(Queue<DirectoryMapper> mappers) {
-        return new DirectoryManagerService(mappers);
+    public static DirectoryCleanerService create(Queue<DirectoryMapper> mappers) {
+        return new DirectoryCleanerService(mappers);
     }
 
 
@@ -37,16 +36,16 @@ public class DirectoryManagerService {
             else
                 log.info("Maybe exist");
             if (Files.exists(container.getFromFile()) && new File(container.getToDirectory()).exists() && move(container) != null)
-                log.info("File moved to" + container.getToDirectory());
+                log.info("File moved to " + container.getToDirectory());
         }
     }
 
-    public boolean createDirectory(String directory) {
+    private static boolean createDirectory(String directory) {
         System.out.println("creating dir : " + directory);
         return new File(directory).mkdirs();
     }
 
-    private Path move(DirectoryMapper mapper) throws IOException {
+    private static Path move(DirectoryMapper mapper) throws IOException {
         return Files.copy(mapper.getFromFile(), Paths.get(mapper.getToFilePath()));
     }
 
@@ -68,7 +67,7 @@ public class DirectoryManagerService {
                 Paths.get("uploads/media_example/media_example.mp4"),
                 "work/14/video/"));
 
-        DirectoryManagerService.create(queue).run();
+        DirectoryCleanerService.create(queue).run();
 
     }
 
