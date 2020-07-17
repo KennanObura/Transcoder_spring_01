@@ -36,7 +36,7 @@ public class DirectoryManagerService {
                 log.info("Dir created");
             else
                 log.info("Maybe exist");
-            if (new File(container.getToDirectory()).exists() && move(container) != null)
+            if (Files.exists(container.getFromFile()) && new File(container.getToDirectory()).exists() && move(container) != null)
                 log.info("File moved to" + container.getToDirectory());
         }
     }

@@ -28,7 +28,11 @@ public class DirectoryMapper {
         return toDirectory + "/media" + getExtention(name);
     }
 
-    private static String getExtention(String name) throws IOException {
+    public String getName(){
+        return name;
+    }
+
+    public String getExtention(String name) throws IOException {
         if(name.isEmpty()) throw new IOException("No valid name provided");
         int count = 0;
         while (name.charAt(count) != '.') count++;
@@ -40,6 +44,6 @@ public class DirectoryMapper {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println(getExtention("f_1781.mp3"));
+//        System.out.println(getExtention("f_1781.mp3"));
     }
 }

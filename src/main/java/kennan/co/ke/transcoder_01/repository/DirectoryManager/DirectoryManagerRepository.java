@@ -6,6 +6,7 @@ import kennan.co.ke.transcoder_01.core.entity.Project;
 import kennan.co.ke.transcoder_01.core.entity.TempMedia;
 import kennan.co.ke.transcoder_01.core.model.DirectoryMapper;
 import kennan.co.ke.transcoder_01.core.model.ProjectModel;
+import kennan.co.ke.transcoder_01.core.service.batchProcessor.BatchProcessService;
 import kennan.co.ke.transcoder_01.core.service.directoryManager.DirectoryManagerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +37,8 @@ public class DirectoryManagerRepository {
                 for (Content content : project.getContents())
                     if (content.getMediaList() != null)
                         for (TempMedia media : content.getMediaList()) {
-                            String ROOT_PATH = "C:\\Apache24";
-                            String fromFilePath = ROOT_PATH + "/htdocs/uploads/" + media.getPath();
+                            String ROOT_PATH = "C:\\Apache24\\htdocs";
+                            String fromFilePath = ROOT_PATH + "/uploads/" + media.getPath();
 
                             String toDirectory = ROOT_PATH + "/mediafilesystem/"
                                     + project.getProjectName() + "/"
@@ -54,7 +55,15 @@ public class DirectoryManagerRepository {
     public void then() throws IOException {
         log.info(" queue size ==========" + directoryMapperList.size());
         DirectoryManagerService.create(directoryMapperList).run();
+    }
 
+    public void finaly() {
+        try {
+            BatchProcessService.createWithMappers(directoryMapperList).process();
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.info(" terminated :" + e.toString());
+        }
     }
 
     private String getFileType(String type) {
