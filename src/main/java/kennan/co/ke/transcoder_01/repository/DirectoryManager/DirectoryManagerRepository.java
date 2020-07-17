@@ -36,9 +36,10 @@ public class DirectoryManagerRepository {
                 for (Content content : project.getContents())
                     if (content.getMediaList() != null)
                         for (TempMedia media : content.getMediaList()) {
-                            String fromFilePath = "/uploads/" + media.getPath();
+                            String ROOT_PATH = "C:\\Apache24";
+                            String fromFilePath = ROOT_PATH + "/htdocs/uploads/" + media.getPath();
 
-                            String toDirectory = "work/"
+                            String toDirectory = ROOT_PATH + "/mediafilesystem/"
                                     + project.getProjectName() + "/"
                                     + content.getContent_id() + "/"
                                     + getFileType(media.getMedia_type()) + "/"
