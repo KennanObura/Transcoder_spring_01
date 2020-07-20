@@ -54,8 +54,8 @@ public class DirectoryCleanerRepository implements InterfaceDirectoryCleaner {
     private void configureDirectoryMapperAndPutToQueue(Project project, Content content, TempMedia media) {
 
         String ROOT_PATH = getEnvironmentSpecificRootPath();
-//        String fromFilePath = ROOT_PATH + "uploads/" + media.getPath();
-        String fromFilePath = ROOT_PATH + "uploads/P10077_documentary/media_example.mp4";
+        String fromFilePath = ROOT_PATH + "uploads/" + media.getPath();
+//        String fromFilePath = ROOT_PATH + "uploads/P10077_documentary/media_example.mp4";
         String toDirectory = ROOT_PATH + Constants.PARENT_RESOURCE_DIRECTORY
                 + project.getProjectName() + "/"
                 + content.getContent_id() + "/"
