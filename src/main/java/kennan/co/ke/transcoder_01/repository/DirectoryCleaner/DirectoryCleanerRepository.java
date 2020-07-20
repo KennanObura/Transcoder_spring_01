@@ -1,13 +1,15 @@
 package kennan.co.ke.transcoder_01.repository.DirectoryCleaner;
 
 import kennan.co.ke.transcoder_01.api.FakeRestController;
+import kennan.co.ke.transcoder_01.constants.Constants;
+import kennan.co.ke.transcoder_01.core.common.OSValidator;
 import kennan.co.ke.transcoder_01.core.entity.Content;
 import kennan.co.ke.transcoder_01.core.entity.Project;
 import kennan.co.ke.transcoder_01.core.entity.TempMedia;
-import kennan.co.ke.transcoder_01.core.model.DirectoryMapper;
+import kennan.co.ke.transcoder_01.core.entity.DirectoryMapper;
 import kennan.co.ke.transcoder_01.core.model.ProjectModel;
-import kennan.co.ke.transcoder_01.core.service.batchProcessor.BatchProcessService;
-import kennan.co.ke.transcoder_01.core.service.directoryCleaner.DirectoryCleanerService;
+import kennan.co.ke.transcoder_01.core.usecase.batchProcessor.BatchProcess;
+import kennan.co.ke.transcoder_01.core.usecase.directoryCleaner.DirectoryCleaner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,13 +32,17 @@ public class DirectoryCleanerRepository implements InterfaceDirectoryCleaner {
     }
 
     @Override
-    public BatchProcessService run() throws IOException {
+    public BatchProcess configure() throws IOException {
+        int count = 0;
         for (Project project : projects.getProjects()) {
             if (project.getContents() != null) {
                 for (Content content : project.getContents())
                     if (content.getMediaList() != null)
-                        for (TempMedia media : content.getMediaList())
-                            configureDirectoryMapperAndPutToQueue(project, content, media);
+                        for (TempMedia media : content.getMediaList()) {
+                            if (count > 10 && count < 14) // count is only for testing threads
+                                configureDirectoryMapperAndPutToQueue(project, content, media);
+                            count++;
+                        }
 
 
             }
@@ -46,35 +52,43 @@ public class DirectoryCleanerRepository implements InterfaceDirectoryCleaner {
 
 
     private void configureDirectoryMapperAndPutToQueue(Project project, Content content, TempMedia media) {
-//        String ROOT_PATH = "C:\\Apache24\\htdocs/";
-        String ROOT_PATH = "";
-//        String fromFilePath = ROOT_PATH + "uploads/" + media.getPath();
 
+        String ROOT_PATH = getEnvironmentSpecificRootPath();
+//        String fromFilePath = ROOT_PATH + "uploads/" + media.getPath();
         String fromFilePath = ROOT_PATH + "uploads/P10077_documentary/media_example.mp4";
-        String toDirectory = ROOT_PATH + "mediafilesystem/"
+        String toDirectory = ROOT_PATH + Constants.PARENT_RESOURCE_DIRECTORY
                 + project.getProjectName() + "/"
                 + content.getContent_id() + "/"
                 + getFileType(media.getMedia_type()) + "/"
                 + media.getMedia_id() + "/";
 
-        directoryMapperList.add(new DirectoryMapper(media.getPath(), Paths.get(fromFilePath), toDirectory));
+        directoryMapperList.add(new DirectoryMapper(media.getPath(), Paths.get(fromFilePath), "media", toDirectory));
     }
 
-    private BatchProcessService startBatchProcessService() throws IOException {
-        log.info("Queue size ======== " + directoryMapperList.size());
-
-        DirectoryCleanerService.create(new LinkedList<>(directoryMapperList)).run();
-        return BatchProcessService.createWithMappers(directoryMapperList);
+    private static String getEnvironmentSpecificRootPath(){
+        if(OSValidator.getOperatingSystemEnvironment().equals("uni"))
+            return "";
+        else return Constants.WIN_ROOT_PATH;
     }
 
 
-    private String getFileType(String type) {
-        if (isVideo(type)) return "video";
-        else return "audio";
+    private BatchProcess startBatchProcessService() throws IOException {
+        DirectoryCleaner.create(new LinkedList<>(directoryMapperList)).run();
+        return BatchProcess.createWithDirectoryMappers(directoryMapperList);
     }
 
-    private boolean isVideo(String string) {
-        return string.contains("video");
+
+    private String getFileType(String mediaFileType) {
+        if (isVideo(mediaFileType)) return MEDIA_TYPE.video.name();
+        else return MEDIA_TYPE.audio.name();
+    }
+
+    private boolean isVideo(String mediaFileType) {
+        return mediaFileType.contains("video");
+    }
+
+    private enum MEDIA_TYPE {
+        video, audio
     }
 
 

@@ -6,7 +6,7 @@ import kennan.co.ke.transcoder_01.api.Exception.PathNotFoundException;
 import kennan.co.ke.transcoder_01.core.model.MediaModel;
 import kennan.co.ke.transcoder_01.repository.base.AbstractRepository;
 import kennan.co.ke.transcoder_01.repository.common.MetadataValidator.MetadataValidator;
-import kennan.co.ke.transcoder_01.core.service.transcoder.VideoSplitterService;
+import kennan.co.ke.transcoder_01.core.usecase.transcoder.videoSplitter.VideoSplitterService;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 
 

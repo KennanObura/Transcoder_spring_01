@@ -1,12 +1,14 @@
 package kennan.co.ke.transcoder_01.repository.RepositoryTranscode;
 
 import kennan.co.ke.transcoder_01.api.Exception.PathNotFoundException;
-import kennan.co.ke.transcoder_01.core.service.transcoder.SprintService;
-import kennan.co.ke.transcoder_01.core.service.transcoder.StreamableHslService;
-import kennan.co.ke.transcoder_01.core.service.transcoder.ThumbnailService;
+import kennan.co.ke.transcoder_01.core.usecase.transcoder.sprint.SprintService;
+import kennan.co.ke.transcoder_01.core.usecase.transcoder.hsl.StreamableHslService;
+import kennan.co.ke.transcoder_01.core.usecase.transcoder.thumbnail.ThumbnailService;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 import kennan.co.ke.transcoder_01.core.model.MediaModel;
 import kennan.co.ke.transcoder_01.repository.base.AbstractRepository;
+
+import static kennan.co.ke.transcoder_01.constants.Constants.*;
 
 
 public class TranscodeRepository
@@ -28,31 +30,26 @@ public class TranscodeRepository
         }
 
         MediaModel thumbnailContainer = new MediaModel(media);
-        thumbnailContainer.setMasterDirectory(media.getDirectory() + "thumbnails/");
-        thumbnailContainer.setOutputDirectory(thumbnailContainer.getMasterDirectory() + "main_thumbnail.png");
+        thumbnailContainer.setMasterDirectory(media.getDirectory() + DIR_THUMBNAILS);
+        thumbnailContainer.setOutputDirectory(thumbnailContainer.getMasterDirectory() + NICKNAME_THUMBNAIL);
 
 
         MediaModel sprintContainer = new MediaModel(media);
-        sprintContainer.setMasterDirectory(media.getDirectory() + "sprint/");
-        sprintContainer.setOutputDirectory(sprintContainer.getMasterDirectory() + "index.jpg");
+        sprintContainer.setMasterDirectory(media.getDirectory() + DIR_SPRINT);
+        sprintContainer.setOutputDirectory(sprintContainer.getMasterDirectory() + NICKNAME_SPRINT);
 
 
         MediaModel hslContainer = new MediaModel(media);
-        hslContainer.setMasterDirectory(media.getDirectory() + "hsl");
-
+        hslContainer.setMasterDirectory(media.getDirectory() + DIR_STREAMABLEHSL);
 
         Thread hslGeneratorThread = new Thread(StreamableHslService.create(hslContainer));
-        hslGeneratorThread.start();
-
-
         Thread thumbnailGeneratorThread = new Thread(ThumbnailService.create(thumbnailContainer));
-        thumbnailGeneratorThread.start();
-
-
-        thumbnailGeneratorThread.join();
-
         Thread sprintGeneratorThread = new Thread(SprintService.create(sprintContainer));
+
+        hslGeneratorThread.start();
+        thumbnailGeneratorThread.start();
         sprintGeneratorThread.start();
+
     }
 
 }

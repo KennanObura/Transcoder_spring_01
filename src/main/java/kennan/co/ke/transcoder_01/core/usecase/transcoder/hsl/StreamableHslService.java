@@ -1,7 +1,8 @@
-package kennan.co.ke.transcoder_01.core.service.transcoder;
+package kennan.co.ke.transcoder_01.core.usecase.transcoder.hsl;
 
 
-import kennan.co.ke.transcoder_01.core.service.transcoder.base.AbstractTranscoderService;
+import kennan.co.ke.transcoder_01.core.common.FFMPEGPATH;
+import kennan.co.ke.transcoder_01.core.usecase.transcoder.base.AbstractTranscoderService;
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.Media;
@@ -46,7 +47,7 @@ public class StreamableHslService extends AbstractTranscoderService {
 
     private String[] command() {
         String[] command = new String[46];
-        command[0] = getFfmpegPath();
+        command[0] = FFMPEGPATH.get();
         command[1] = "-y";
         command[2] = "-i";
         command[3] = media.getDirectory() + media.getName();

@@ -1,5 +1,6 @@
 package kennan.co.ke.transcoder_01.DI;
 
+import kennan.co.ke.transcoder_01.core.usecase.transcoder.sprint.tileGenerator.TileGenerator;
 import kennan.co.ke.transcoder_01.repository.RepositoryTranscode.TranscodeRepository;
 import kennan.co.ke.transcoder_01.repository.RepositoryVideoSplitter.VideoSplitterRepository;
 import kennan.co.ke.transcoder_01.repository.base.AbstractRepository;
@@ -39,6 +40,11 @@ public class DIConfiguration {
     public Logger produceLogger(InjectionPoint injectionPoint) {
         Class<?> classOnWired = injectionPoint.getMember().getDeclaringClass();
         return LoggerFactory.getLogger(classOnWired);
+    }
+
+    @Bean
+    public TileGenerator tileGenerator() {
+        return new TileGenerator();
     }
 
 //    @Bean

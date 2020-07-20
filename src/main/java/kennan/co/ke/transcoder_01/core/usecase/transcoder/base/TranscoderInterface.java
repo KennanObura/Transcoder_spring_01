@@ -1,4 +1,4 @@
-package kennan.co.ke.transcoder_01.core.service.transcoder.base;
+package kennan.co.ke.transcoder_01.core.usecase.transcoder.base;
 
 import java.io.IOException;
 

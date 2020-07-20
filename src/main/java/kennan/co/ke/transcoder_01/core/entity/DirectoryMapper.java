@@ -1,4 +1,4 @@
-package kennan.co.ke.transcoder_01.core.model;
+package kennan.co.ke.transcoder_01.core.entity;
 
 
 import java.io.IOException;
@@ -7,17 +7,20 @@ import java.nio.file.Path;
 public class DirectoryMapper {
 
     public DirectoryMapper(
-            String name,
-            Path fromFile,
+            String fromName,
+            Path fromFilePath,
+            String toName,
             String toDirectory){
-        this.fromFile = fromFile;
+        this.fromFile = fromFilePath;
         this.toDirectory = toDirectory;
-        this.name = name;
+        this.fromName = fromName;
+        this.toName = toName;
     }
 
     private final Path fromFile;
     private final String toDirectory;
-    private final String name;
+    private final String fromName;
+    private final String toName;
 
 
     public String getToDirectory() {
@@ -25,11 +28,11 @@ public class DirectoryMapper {
     }
 
     public String getToFilePath() throws IOException {
-        return toDirectory + "/media" + getExtention(name);
+        return toDirectory + "/"+toName + getExtention(fromName);
     }
 
-    public String getName(){
-        return name;
+    public String getFromName(){
+        return fromName;
     }
 
     public String getExtention(String name) throws IOException {

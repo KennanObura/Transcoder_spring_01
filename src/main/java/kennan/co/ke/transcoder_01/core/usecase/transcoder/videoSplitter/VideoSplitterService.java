@@ -1,6 +1,7 @@
-package kennan.co.ke.transcoder_01.core.service.transcoder;
+package kennan.co.ke.transcoder_01.core.usecase.transcoder.videoSplitter;
 
-import kennan.co.ke.transcoder_01.core.service.transcoder.base.AbstractTranscoderService;
+import kennan.co.ke.transcoder_01.core.common.FFMPEGPATH;
+import kennan.co.ke.transcoder_01.core.usecase.transcoder.base.AbstractTranscoderService;
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.Media;
@@ -30,7 +31,7 @@ public class VideoSplitterService extends AbstractTranscoderService {
     @Override
     public void write() {
         try {
-            System.out.println("Running ............................");
+            log.info(process + " Started running");
             Runtime.getRuntime().exec(command()).waitFor();
             AppMessage.write(FINALIZING, mediaModel, process);
         } catch (IOException | InterruptedException e) {
@@ -42,7 +43,7 @@ public class VideoSplitterService extends AbstractTranscoderService {
 
     private String[] command() {
         String[] command = new String[11];
-        command[0] = getFfmpegPath();
+        command[0] = FFMPEGPATH.get();
         command[1] = "-t";
         command[2] = mediaModel.getEndTime();
         command[3] = "-i";

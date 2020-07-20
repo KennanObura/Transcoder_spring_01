@@ -1,10 +1,11 @@
-package kennan.co.ke.transcoder_01.core.service.transcoder.base;
+package kennan.co.ke.transcoder_01.core.usecase.transcoder.base;
 
 
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.model.MediaModel;
-import kennan.co.ke.transcoder_01.core.common.OSValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
@@ -19,26 +20,17 @@ public abstract class AbstractTranscoderService
     public AbstractTranscoderService(MediaModel mediaModel) {
         this.mediaModel = mediaModel;
         this.file = new File(this.mediaModel.getMedia().getName());
-        this.createDirectory(this.mediaModel.getMedia().getDirectory());
         this.createDirectory(mediaModel.getMasterDirectory());
     }
 
     public final MediaModel mediaModel;
     public final File file;
     public AppProcess process;
-
+    protected static final Logger log = LoggerFactory.getLogger(AbstractTranscoderService.class);
 
 
     @Override
     abstract public void write();
-
-
-    public String getFfmpegPath() {
-        if (getCurrentEnvironment().equals("uni"))
-            return "/usr/bin/ffmpeg";
-        else return "C:\\ffmpeg\\bin\\ffmpeg";
-    }
-
 
     @Override
     public void run() {
@@ -54,12 +46,5 @@ public abstract class AbstractTranscoderService
         return new File(directory).mkdirs();
     }
 
-
-    /**
-     * @return String name of the OS environment
-     */
-    public String getCurrentEnvironment() {
-        return OSValidator.getOperatingSystemEnvironment();
-    }
 
 }

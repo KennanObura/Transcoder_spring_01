@@ -1,7 +1,7 @@
-package kennan.co.ke.transcoder_01.core.service.directoryCleaner;
+package kennan.co.ke.transcoder_01.core.usecase.directoryCleaner;
 
 
-import kennan.co.ke.transcoder_01.core.model.DirectoryMapper;
+import kennan.co.ke.transcoder_01.core.entity.DirectoryMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,19 +11,18 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.LinkedList;
 import java.util.Queue;
 
-public class DirectoryCleanerService {
+public class DirectoryCleaner {
     private final Queue<DirectoryMapper> mappers;
-    private static final Logger log = LoggerFactory.getLogger(DirectoryCleanerService.class);
+    private static final Logger log = LoggerFactory.getLogger(DirectoryCleaner.class);
 
-    private DirectoryCleanerService(Queue<DirectoryMapper> mappers) {
+    private DirectoryCleaner(Queue<DirectoryMapper> mappers) {
         this.mappers = mappers;
     }
 
-    public static DirectoryCleanerService create(Queue<DirectoryMapper> mappers) {
-        return new DirectoryCleanerService(mappers);
+    public static DirectoryCleaner create(Queue<DirectoryMapper> mappers) {
+        return new DirectoryCleaner(mappers);
     }
 
 
@@ -51,23 +50,23 @@ public class DirectoryCleanerService {
 
 
     public static void main(String[] args) throws Exception {
-        Queue<DirectoryMapper> queue = new LinkedList<>();
-        queue.add(new DirectoryMapper(
-                "media.mp4",
-                Paths.get("uploads/media_example/media_example.mp4"),
-                "work/12/video/"));
+//        Queue<DirectoryMapper> queue = new LinkedList<>();
+//        queue.add(new DirectoryMapper(
+//                "media.mp4",
+//                Paths.get("uploads/media_example/media_example.mp4"),
+//                "work/12/video/"));
+//
+//        queue.add(new DirectoryMapper(
+//                "media.mp4",
+//                Paths.get("uploads/media_example/media_example.mp4"),
+//                "work/16/video/"));
+//
+//        queue.add(new DirectoryMapper(
+//                "media.mp4",
+//                Paths.get("uploads/media_example/media_example.mp4"),
+//                "work/14/video/"));
 
-        queue.add(new DirectoryMapper(
-                "media.mp4",
-                Paths.get("uploads/media_example/media_example.mp4"),
-                "work/16/video/"));
-
-        queue.add(new DirectoryMapper(
-                "media.mp4",
-                Paths.get("uploads/media_example/media_example.mp4"),
-                "work/14/video/"));
-
-        DirectoryCleanerService.create(queue).run();
+//        DirectoryCleanerService.create(queue).run();
 
     }
 
