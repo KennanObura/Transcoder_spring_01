@@ -13,20 +13,24 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Queue;
 
-public class DirectoryCleaner {
+/**
+ *
+ * A util responsible for cleaning a directory, or copying content from to a directory
+ */
+public class DirectoryResourcesUtil {
     private final Queue<DirectoryMapper> mappers;
-    private static final Logger log = LoggerFactory.getLogger(DirectoryCleaner.class);
+    private static final Logger log = LoggerFactory.getLogger(DirectoryResourcesUtil.class);
 
-    private DirectoryCleaner(Queue<DirectoryMapper> mappers) {
+    private DirectoryResourcesUtil(Queue<DirectoryMapper> mappers) {
         this.mappers = mappers;
     }
 
-    public static DirectoryCleaner create(Queue<DirectoryMapper> mappers) {
-        return new DirectoryCleaner(mappers);
+    public static DirectoryResourcesUtil create(Queue<DirectoryMapper> mappers) {
+        return new DirectoryResourcesUtil(mappers);
     }
 
 
-    public void run() throws IOException {
+    public void clean() throws IOException {
         log.info(" Started well with items" + mappers.size());
         while (!mappers.isEmpty()) {
             DirectoryMapper container = mappers.poll();
@@ -34,8 +38,25 @@ public class DirectoryCleaner {
                 log.info("Dir created");
             else
                 log.info("Maybe exist");
-            if (Files.exists(container.getFromFile()) && new File(container.getToDirectory()).exists() && move(container) != null)
+            if (Files.exists(container.getFromFile()) && new File(container.getToDirectory()).exists() && move(container) != null )
                 log.info("File moved to " + container.getToDirectory());
+
+        }
+    }
+
+
+    public void copy() throws IOException {
+        log.info(" Started well with items" + mappers.size());
+        while (!mappers.isEmpty()) {
+            DirectoryMapper container = mappers.poll();
+            if (createDirectory(container.getToDirectory()))
+                log.info("Dir created");
+            else
+                log.info("Maybe exist");
+            if (Files.exists(container.getFromFile()) && new File(container.getToDirectory()).exists() ) {
+                copyDirectory(container);
+                log.info("File moved to " + container.getToDirectory());
+            }
         }
     }
 
@@ -47,6 +68,12 @@ public class DirectoryCleaner {
     private static Path move(DirectoryMapper mapper) throws IOException {
         return Files.copy(mapper.getFromFile(), Paths.get(mapper.getToFilePath()));
     }
+
+
+    private static void copyDirectory(DirectoryMapper mapper) throws IOException {
+        org.apache.commons.io.FileUtils.copyDirectory(mapper.getFromFile().toFile(), new File(mapper.getToDirectory()));
+    }
+
 
 
     public static void main(String[] args) throws Exception {

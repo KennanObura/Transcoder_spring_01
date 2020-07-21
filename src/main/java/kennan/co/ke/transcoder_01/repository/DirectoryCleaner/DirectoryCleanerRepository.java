@@ -9,7 +9,7 @@ import kennan.co.ke.transcoder_01.core.entity.TempMedia;
 import kennan.co.ke.transcoder_01.core.entity.DirectoryMapper;
 import kennan.co.ke.transcoder_01.core.model.ProjectModel;
 import kennan.co.ke.transcoder_01.core.usecase.batchProcessor.BatchProcess;
-import kennan.co.ke.transcoder_01.core.usecase.directoryCleaner.DirectoryCleaner;
+import kennan.co.ke.transcoder_01.core.usecase.directoryCleaner.DirectoryResourcesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,15 +33,15 @@ public class DirectoryCleanerRepository implements InterfaceDirectoryCleaner {
 
     @Override
     public BatchProcess configure() throws IOException {
-        int count = 0;
+//        int count = 0;
         for (Project project : projects.getProjects()) {
             if (project.getContents() != null) {
                 for (Content content : project.getContents())
                     if (content.getMediaList() != null)
                         for (TempMedia media : content.getMediaList()) {
-                            if (count > 10 && count < 14) // count is only for testing threads
+//                            if (count > 10 && count < 14) // count is only for testing threads
                                 configureDirectoryMapperAndPutToQueue(project, content, media);
-                            count++;
+//                            count++;
                         }
 
 
@@ -54,13 +54,17 @@ public class DirectoryCleanerRepository implements InterfaceDirectoryCleaner {
     private void configureDirectoryMapperAndPutToQueue(Project project, Content content, TempMedia media) {
 
         String ROOT_PATH = getEnvironmentSpecificRootPath();
-        String fromFilePath = ROOT_PATH + "uploads/" + media.getPath();
-//        String fromFilePath = ROOT_PATH + "uploads/P10077_documentary/media_example.mp4";
+//        String fromFilePath = ROOT_PATH + "uploads/" + media.getPath();
+        String fromFilePath = ROOT_PATH +  Constants.FROM_TEMP_RESOURCE_DIRECTORY
+                + project.getProjectName() + "/"
+                + content.getContent_id() + "/"
+                + getFileType(media.getMedia_type()) + "/"
+                + media.getMedia_id() + "/hsl";
         String toDirectory = ROOT_PATH + Constants.PARENT_RESOURCE_DIRECTORY
                 + project.getProjectName() + "/"
                 + content.getContent_id() + "/"
                 + getFileType(media.getMedia_type()) + "/"
-                + media.getMedia_id() + "/";
+                + media.getMedia_id() + "/hsl";
 
         directoryMapperList.add(new DirectoryMapper(media.getPath(), Paths.get(fromFilePath), "media", toDirectory));
     }
@@ -73,7 +77,7 @@ public class DirectoryCleanerRepository implements InterfaceDirectoryCleaner {
 
 
     private BatchProcess startBatchProcessService() throws IOException {
-        DirectoryCleaner.create(new LinkedList<>(directoryMapperList)).run();
+        DirectoryResourcesUtil.create(new LinkedList<>(directoryMapperList)).copy();
         return BatchProcess.createWithDirectoryMappers(directoryMapperList);
     }
 

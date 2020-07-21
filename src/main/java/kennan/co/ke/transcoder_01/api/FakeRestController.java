@@ -27,8 +27,8 @@ public class FakeRestController implements CommandLineRunner {
         assert projects != null;
 
         DirectoryCleanerRepository.createWithProjects(projects)
-                .configure()
-                .thenExecute();
+                .configure();
+//                .thenExecute();
 
 
         log.info(projects.toString());

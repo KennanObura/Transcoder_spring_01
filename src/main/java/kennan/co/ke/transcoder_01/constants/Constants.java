@@ -17,5 +17,6 @@ public class Constants {
     public static final String WIN_ROOT_PATH = "C:\\Apache24\\htdocs/";
 
     public static final String PARENT_RESOURCE_DIRECTORY = "mediaresources/";
+    public static final String FROM_TEMP_RESOURCE_DIRECTORY = "mediafilesystem/";
 
 }
