@@ -1,9 +1,12 @@
 package kennan.co.ke.transcoder_01.core.entity;
 
+
 import kennan.co.ke.transcoder_01.core.common.DirectoryWalker;
 import org.springframework.lang.Nullable;
 
-public class Media {
+import java.io.Serializable;
+
+public class Media  implements Serializable {
     private String id;
     private String name;
     @Nullable
