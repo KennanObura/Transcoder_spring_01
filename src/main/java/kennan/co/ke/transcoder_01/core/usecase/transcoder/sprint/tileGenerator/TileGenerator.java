@@ -18,17 +18,35 @@ public class TileGenerator implements InterfaceTileGenerator {
     final private static int SPRINT_HEIGHT = 108;
     final private static int SPRINT_WIDTH = 192;
 
+    public static TileGenerator create(String outputDirectory, TreeMap<Integer, File> sortedCandidatesFromDirectory) {
+        return new TileGenerator(outputDirectory, sortedCandidatesFromDirectory);
+    }
 
-    @Override
-    public boolean thumbnailsMerged(String outputDirectory, TreeMap<Integer, File> dirContents) throws IOException {
+    private TileGenerator(String outputDirectory, TreeMap<Integer, File> sortedCandidatesFromDirectory) {
+        this.outputDirectory = outputDirectory;
+        this.sortedCandidatesFromDirectory = sortedCandidatesFromDirectory;
+        System.out.println(sortedCandidatesFromDirectory.size() + " of Tree map");
+    }
+
+
+    private final String outputDirectory;
+    private final TreeMap<Integer, File> sortedCandidatesFromDirectory;
+
+
+
+
+
+
+
+    private boolean margeThumbnails() throws IOException {
         BufferedImage tempImage = new BufferedImage(SPRINT_WIDTH,
-                (SPRINT_HEIGHT + 1) * dirContents.size(), //work these out
+                (SPRINT_HEIGHT + 1) * sortedCandidatesFromDirectory.size(), //work these out
                 BufferedImage.TYPE_INT_RGB);
         Graphics graphics = tempImage.getGraphics();
 
 
-        for (int i = 0; i < dirContents.size(); i++)
-            drawImage(i, dirContents.get(i + 1), graphics); //draw image one by one to fill temp
+        for (int i = 0; i < sortedCandidatesFromDirectory.size(); i++)
+            drawImage(i, sortedCandidatesFromDirectory.get(i + 1), graphics); //draw image one by one to fill temp
 
         graphics.dispose(); // dispose off after done drawing
         return ImageIO.write(tempImage, "jpg", new File(outputDirectory));
@@ -52,4 +70,13 @@ public class TileGenerator implements InterfaceTileGenerator {
         return new Pair<>(0, y);
     }
 
+    @Override
+    public void run() {
+        try {
+            if (margeThumbnails()) log.info("Tile created");
+        } catch (IOException e) {
+            log.debug("Error " + e.toString());
+            e.printStackTrace();
+        }
+    }
 }

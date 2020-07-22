@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public interface TranscoderInterface {
 
-    void write() throws IOException;
+    void write() throws IOException, InterruptedException;
 
     boolean createDirectory(String directory);
 

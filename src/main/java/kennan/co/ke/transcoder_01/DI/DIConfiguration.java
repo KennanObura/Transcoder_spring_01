@@ -42,10 +42,7 @@ public class DIConfiguration {
         return LoggerFactory.getLogger(classOnWired);
     }
 
-    @Bean
-    public TileGenerator tileGenerator() {
-        return new TileGenerator();
-    }
+
 
 //    @Bean
 //    public StreamableHslService streamableHslService() {return new StreamableHslService(); }

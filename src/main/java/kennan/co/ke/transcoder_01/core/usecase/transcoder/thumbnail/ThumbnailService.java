@@ -15,25 +15,27 @@ public class ThumbnailService extends AbstractTranscoderService {
         super.process = AppProcess.THUMBNAIL;
     }
 
-    public static AbstractTranscoderService create(MediaContainer mediaModel){
+    public static AbstractTranscoderService create(MediaContainer mediaModel) {
         return new ThumbnailService(mediaModel);
     }
 
 
     @Override
-    public void write() {
+    public void write() throws InterruptedException {
         this.runCommand();
     }
 
 
-    private void runCommand() {
-        boolean hasThumbnailGeneratorFinished = ThumbnailUtil
-                .generate(mediaModel, process)
-                .ofDimensions(1280, 720);
-        if(hasThumbnailGeneratorFinished) {
-            Thread selector = new Thread(BestCandidateSelector.select(mediaModel.getMasterDirectory()));
-            selector.start();
-        }
+    private void runCommand() throws InterruptedException {
+
+        Thread generatorThread = new Thread(ThumbnailUtil.generate(mediaModel, process, "1280x720"));
+        generatorThread.start();
+
+        generatorThread.join();
+
+        Thread selector = new Thread(BestCandidateSelector.select(mediaModel.getMasterDirectory()));
+        selector.start();
+
     }
 
 }

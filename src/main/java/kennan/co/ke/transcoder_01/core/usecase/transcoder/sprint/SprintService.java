@@ -31,10 +31,6 @@ public class SprintService extends AbstractTranscoderService {
     final private static int SPRINT_WIDTH = 192;
     final private String contentDirectory = mediaModel.getMasterDirectory();
 
-    @Autowired
-    private final TileGenerator tileGenerator = (new AnnotationConfigApplicationContext(DIConfiguration.class))
-            .getBean(TileGenerator.class);
-
 
     public static AbstractTranscoderService create(MediaContainer mediaModel) {
         return new SprintService(mediaModel);
@@ -45,22 +41,28 @@ public class SprintService extends AbstractTranscoderService {
     public void write() {
         try {
             runCommand();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
 
-    private void runCommand() throws IOException {
-        boolean hasThumbnailGeneratorFinished = ThumbnailUtil
-                .generate(mediaModel, process)
-                .ofDimensions(SPRINT_WIDTH, SPRINT_HEIGHT);
+    private void runCommand() throws IOException, InterruptedException {
+        Thread generatorThread = new Thread(ThumbnailUtil.generate(mediaModel, process, SPRINT_WIDTH+"x"+SPRINT_HEIGHT));
 
-        if (hasThumbnailGeneratorFinished && tileGenerator
-                .thumbnailsMerged(mediaModel.getOutputDirectory(), getSortedCandidatesFromDirectory(new TreeMap<>()))) {
-            log.info("Sprint generator finished");
+
+        log.info(" Generator started");
+        generatorThread.start();
+
+        log.info(" Generator on hold");
+        generatorThread.join();
+
+        Thread tileThread = new Thread(
+                TileGenerator.create(mediaModel.getOutputDirectory(), getSortedCandidatesFromDirectory(new TreeMap<>())));
+        log.info(" Tile on started");
+        tileThread.start();
             //call db  layer for save
-        }
+
     }
 
 

@@ -30,13 +30,18 @@ public abstract class AbstractTranscoderService
 
 
     @Override
-    abstract public void write();
+    abstract public void write() throws InterruptedException;
 
     @Override
     public void run() {
         AppMessage.write(INITIALIZING, mediaModel, process);
         System.out.println("Thread "+ Thread.currentThread().getName() + " of service " + process);
-        this.write();
+        try {
+            this.write();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            log.debug("Error on process" + process + " " + e.toString(), new Throwable("Bad error"));
+        }
     }
 
 

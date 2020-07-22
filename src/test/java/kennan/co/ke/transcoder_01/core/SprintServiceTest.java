@@ -11,13 +11,4 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SprintServiceTest {
 
 
-    @Autowired
-    TileGenerator tileGenerator;
-
-    @Test
-    public void tileGeneratorInjected() {
-        assertThat(tileGenerator).isNotNull();
-    }
-
-
 }
