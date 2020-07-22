@@ -17,18 +17,18 @@ import static kennan.co.ke.transcoder_01.constants.Constants.MAX_THUMBNAILS_AS_B
  * Collects all images from specified directory by calling @DirectoryWalker util,
  * uses an algorithm of simple ranking to get top (five) @MAX_FILES of best candidates and disregarding the rest
  * (Deleting them) from directory
- *
- *
+ * <p>
+ * <p>
  * that is:::
- *          From created x-number of thumbnails all at different points.
- *          Take the largest (in bytes) file and discard the rest
- *
- *
+ * From created x-number of thumbnails all at different points.
+ * Take the largest (in bytes) file and discard the rest
+ * <p>
+ * <p>
  * This bases from the idea that jpeg files of a monotone 'boring' image, (eg an all black screen),
  * compress into a much smaller files than an image with many objects and colors in it.
- *
+ * <p>
  * By this we end up with at least viable 80/20 candidates. .
- *
+ * <p>
  * Might need improvement, >>>>>>>>research
  */
 
@@ -72,11 +72,13 @@ public class BestCandidateSelector implements Runnable {
         for (Map.Entry<Long, File> entry : mapOfFiles.entrySet()) {
             File image = entry.getValue();
 
-            if (count++ < MAX_THUMBNAILS_AS_BEST) {
-                File newImage = new File(contentDirectory + String.format("%d_thumbnail.png", count));
+            if (count < MAX_THUMBNAILS_AS_BEST) {
+                File newImage = new File(contentDirectory + String.format("%d_thumbnail.png", count++));
                 if (image.renameTo(newImage)) log.info("File: " + image + " reserved as one of bests");
-            } else if (count >= MAX_THUMBNAILS_AS_BEST && disregard(image))
-                log.info("File: " + image + " deleted");
+            } else {
+                if (disregard(image)) log.info("File: " + image + " deleted");
+            }
+
         }
     }
 

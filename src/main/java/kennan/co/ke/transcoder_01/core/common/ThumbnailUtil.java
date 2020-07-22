@@ -36,7 +36,7 @@ public class ThumbnailUtil {
     private boolean commandRunner(int x, int y) {
         String dimension = x+"x"+y;
         try {
-            Runtime.getRuntime().exec(command(dimension)).waitFor();
+            Runtime.getRuntime().exec(cmd(dimension)).waitFor();
             AppMessage.write(FINALIZING, mediaModel, process);
             return true;
         } catch (Exception e) {
@@ -58,6 +58,24 @@ public class ThumbnailUtil {
         cmd[6] = dimension;
         cmd[7] = mediaModel.getMasterDirectory() + "pic%d.png";
         cmd[8] = "-report";
+        return cmd;
+    }
+
+    private String[] cmd(String dimension){
+//        ffmpeg -i input.flv -vf "select='eq(pict_type,PICT_TYPE_I)'" -vsync vfr thumb%04d.png
+
+        String[] cmd = new String[11];
+        cmd[0] = FFMPEGPATH.get();
+        cmd[1] = "-i";
+        cmd[2] = media.getDirectory() + media.getName();
+        cmd[3] = "-vf";
+        cmd[4] = "select='eq(pict_type,PICT_TYPE_I)'";
+        cmd[5] = "-vsync";
+        cmd[6] = "vfr";
+        cmd[7] = "-s";
+        cmd[8] = dimension;
+        cmd[9] = mediaModel.getMasterDirectory() + "pic%d.png";
+        cmd[10] = "-report";
         return cmd;
     }
 }
