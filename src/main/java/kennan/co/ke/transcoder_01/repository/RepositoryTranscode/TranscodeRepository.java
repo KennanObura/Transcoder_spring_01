@@ -42,11 +42,11 @@ public class TranscodeRepository
         MediaModel hslContainer = new MediaModel(media);
         hslContainer.setMasterDirectory(media.getDirectory() + DIR_STREAMABLEHSL);
 
-//        Thread hslGeneratorThread = new Thread(StreamableHslService.create(hslContainer));
+        Thread hslGeneratorThread = new Thread(StreamableHslService.create(hslContainer));
         Thread thumbnailGeneratorThread = new Thread(ThumbnailService.create(thumbnailContainer));
         Thread sprintGeneratorThread = new Thread(SprintService.create(sprintContainer));
 
-//        hslGeneratorThread.start();
+        hslGeneratorThread.start();
         thumbnailGeneratorThread.start();
         sprintGeneratorThread.start();
 
