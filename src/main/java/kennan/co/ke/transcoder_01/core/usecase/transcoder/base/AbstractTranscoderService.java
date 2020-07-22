@@ -3,7 +3,7 @@ package kennan.co.ke.transcoder_01.core.usecase.transcoder.base;
 
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
-import kennan.co.ke.transcoder_01.core.model.MediaModel;
+import kennan.co.ke.transcoder_01.core.model.MediaContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,13 +17,13 @@ public abstract class AbstractTranscoderService
         TranscoderInterface,
         Runnable {
 
-    public AbstractTranscoderService(MediaModel mediaModel) {
+    public AbstractTranscoderService(MediaContainer mediaModel) {
         this.mediaModel = mediaModel;
         this.file = new File(this.mediaModel.getMedia().getName());
         this.createDirectory(mediaModel.getMasterDirectory());
     }
 
-    public final MediaModel mediaModel;
+    public final MediaContainer mediaModel;
     public final File file;
     public AppProcess process;
     protected static final Logger log = LoggerFactory.getLogger(AbstractTranscoderService.class);

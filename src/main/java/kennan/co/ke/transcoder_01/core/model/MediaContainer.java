@@ -2,11 +2,11 @@ package kennan.co.ke.transcoder_01.core.model;
 
 import kennan.co.ke.transcoder_01.core.entity.Media;
 
-public class MediaModel {
-    public MediaModel(Media media,
-                      String startTime,
-                      String endTime,
-                      String sort) {
+public class MediaContainer {
+    public MediaContainer(Media media,
+                          String startTime,
+                          String endTime,
+                          String sort) {
         this.media = media;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -14,7 +14,7 @@ public class MediaModel {
     }
 
 
-    public MediaModel(Media media) {
+    public MediaContainer(Media media) {
         this.media = media;
     }
 
@@ -24,6 +24,7 @@ public class MediaModel {
     private String sort;
     private String outputDirectory;
     private String masterDirectory;
+
 
     public Media getMedia() {
         return media;

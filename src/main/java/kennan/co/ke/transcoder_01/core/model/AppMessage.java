@@ -15,11 +15,11 @@ import kennan.co.ke.transcoder_01.core.common.ActivityLogger;
 
 public class AppMessage {
 
-    public static void write(AppEvent event, MediaModel media, AppProcess process) {
+    public static void write(AppEvent event, MediaContainer media, AppProcess process) {
         dumpToLogger(whichEvent(event, media, process), whichTypeOfMessage(event));
     }
 
-    public static void write(AppEvent event, String exceptionString, MediaModel media, AppProcess process) {
+    public static void write(AppEvent event, String exceptionString, MediaContainer media, AppProcess process) {
         dumpToLogger(whichEvent(event, media, process) + exceptionString, whichTypeOfMessage(event));
     }
 
@@ -27,7 +27,7 @@ public class AppMessage {
         dumpToLogger(exceptionString, whichTypeOfMessage(event));
     }
 
-    private static String whichEvent(AppEvent event, MediaModel media, AppProcess process) {
+    private static String whichEvent(AppEvent event, MediaContainer media, AppProcess process) {
         switch (event) {
             case TERMINATED:
                 return "Process " + process + " of " + media.getMedia().getName() + " terminated :- ";

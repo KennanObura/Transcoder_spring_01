@@ -1,6 +1,7 @@
 package kennan.co.ke.transcoder_01.core.usecase.directoryCleaner;
 
 
+import kennan.co.ke.transcoder_01.core.common.DirectoryWalker;
 import kennan.co.ke.transcoder_01.core.entity.DirectoryMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +16,9 @@ import java.util.Queue;
 
 /**
  *
- * A util responsible for cleaning a directory, or copying content from to a directory
+ * A util responsible for cleaning a directory, or copying content from to a directory or any other directory re
  */
-public class DirectoryResourcesUtil {
+public class DirectoryResourcesUtil  extends DirectoryWalker {
     private final Queue<DirectoryMapper> mappers;
     private static final Logger log = LoggerFactory.getLogger(DirectoryResourcesUtil.class);
 
@@ -45,7 +46,7 @@ public class DirectoryResourcesUtil {
     }
 
 
-    public void copy() throws IOException {
+    public void copyToDirectory() throws IOException {
         log.info(" Started well with items" + mappers.size());
         while (!mappers.isEmpty()) {
             DirectoryMapper container = mappers.poll();

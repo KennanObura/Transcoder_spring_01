@@ -5,7 +5,7 @@ import kennan.co.ke.transcoder_01.core.usecase.transcoder.base.AbstractTranscode
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.Media;
-import kennan.co.ke.transcoder_01.core.model.MediaModel;
+import kennan.co.ke.transcoder_01.core.model.MediaContainer;
 
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ import static kennan.co.ke.transcoder_01.core.entity.AppEvent.TERMINATED;
 
 
 public class VideoSplitterService extends AbstractTranscoderService {
-    private VideoSplitterService(MediaModel mediaModel) {
+    private VideoSplitterService(MediaContainer mediaModel) {
         super(mediaModel);
         super.process = AppProcess.SPLIT;
     }
@@ -23,7 +23,7 @@ public class VideoSplitterService extends AbstractTranscoderService {
     final private Media media = mediaModel.getMedia();
 
 
-    public static AbstractTranscoderService create(MediaModel mediaModel) {
+    public static AbstractTranscoderService create(MediaContainer mediaModel) {
         return new VideoSplitterService(mediaModel);
     }
 

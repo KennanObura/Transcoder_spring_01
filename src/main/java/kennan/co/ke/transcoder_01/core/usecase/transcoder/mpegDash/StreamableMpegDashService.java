@@ -4,20 +4,20 @@ import kennan.co.ke.transcoder_01.core.common.FFMPEGPATH;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
-import kennan.co.ke.transcoder_01.core.model.MediaModel;
+import kennan.co.ke.transcoder_01.core.model.MediaContainer;
 import kennan.co.ke.transcoder_01.core.usecase.transcoder.base.AbstractTranscoderService;
 
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.FINALIZING;
 
 public class StreamableMpegDashService extends AbstractTranscoderService {
 
-    private StreamableMpegDashService(MediaModel mediaModel) {
+    private StreamableMpegDashService(MediaContainer mediaModel) {
         super(mediaModel);
         super.process = AppProcess.STREAMABLEMPEGDASH;
     }
 
 
-    public AbstractTranscoderService create(MediaModel mediaModel){
+    public AbstractTranscoderService create(MediaContainer mediaModel){
         return new StreamableMpegDashService(mediaModel);
     }
 

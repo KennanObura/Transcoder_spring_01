@@ -3,21 +3,21 @@ package kennan.co.ke.transcoder_01.core.common;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
-import kennan.co.ke.transcoder_01.core.model.MediaModel;
+import kennan.co.ke.transcoder_01.core.model.MediaContainer;
 
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.FINALIZING;
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.TERMINATED;
 
 public class ThumbnailUtil {
 
-    private ThumbnailUtil(MediaModel mediaModel, AppProcess process) {
+    private ThumbnailUtil(MediaContainer mediaModel, AppProcess process) {
         this.mediaModel = mediaModel;
         this.process = process;
         this.media = mediaModel.getMedia();
     }
 
 
-    public static ThumbnailUtil generate(MediaModel mediaModel, AppProcess process){
+    public static ThumbnailUtil generate(MediaContainer mediaModel, AppProcess process){
         return new ThumbnailUtil(mediaModel, process);
     }
 
@@ -27,7 +27,7 @@ public class ThumbnailUtil {
 
 
 
-    private final MediaModel mediaModel;
+    private final MediaContainer mediaModel;
     private final AppProcess process;
     private final Media media;
 

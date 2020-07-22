@@ -3,7 +3,8 @@ package kennan.co.ke.transcoder_01.repository.RepositoryVideoSplitter;
 import javafx.util.Pair;
 import kennan.co.ke.transcoder_01.api.Exception.InvalidTimeRangeException;
 import kennan.co.ke.transcoder_01.api.Exception.PathNotFoundException;
-import kennan.co.ke.transcoder_01.core.model.MediaModel;
+import kennan.co.ke.transcoder_01.constants.Constants;
+import kennan.co.ke.transcoder_01.core.model.MediaContainer;
 import kennan.co.ke.transcoder_01.repository.base.AbstractRepository;
 import kennan.co.ke.transcoder_01.repository.common.MetadataValidator.MetadataValidator;
 import kennan.co.ke.transcoder_01.core.usecase.transcoder.videoSplitter.VideoSplitterService;
@@ -52,9 +53,9 @@ public class VideoSplitterRepository extends AbstractRepository
 
 
     private void runGeneratorThread(Media media, String... params) {
-        final MediaModel mediaModel = new MediaModel(media, params[0], params[1], params[2]);
-        mediaModel.setMasterDirectory(media.getDirectory() + "chunks/");
-        mediaModel.setOutputDirectory(mediaModel.getMasterDirectory() + "split_[" + params[2] + "]_" + media.getName());
+        final MediaContainer mediaModel = new MediaContainer(media, params[0], params[1], params[2]);
+        mediaModel.setMasterDirectory(media.getDirectory() + Constants.DIR_SPLIT_CHUNKS);
+        mediaModel.setOutputDirectory(mediaModel.getMasterDirectory() + "split_" + params[2] + "_" + media.getName());
 
         Thread splitGeneratorThread = new Thread(VideoSplitterService.create(mediaModel));
         splitGeneratorThread.start();

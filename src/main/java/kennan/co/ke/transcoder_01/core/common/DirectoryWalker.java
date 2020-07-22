@@ -1,5 +1,7 @@
 package kennan.co.ke.transcoder_01.core.common;
 
+import kennan.co.ke.transcoder_01.constants.Constants;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,4 +18,13 @@ public class DirectoryWalker {
                 .map(Path::toFile)
                 .collect(Collectors.toList());
     }
+
+
+
+    public static String getEnvironmentSpecificRootPath(){
+        if(OSValidator.getOperatingSystemEnvironment().equals("uni"))
+            return Constants.PARENT_RESOURCE_DIRECTORY;
+        else return Constants.WIN_ROOT_PATH + Constants.PARENT_RESOURCE_DIRECTORY;
+    }
+
 }

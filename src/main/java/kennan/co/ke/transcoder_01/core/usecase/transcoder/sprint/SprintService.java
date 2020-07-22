@@ -1,15 +1,13 @@
 package kennan.co.ke.transcoder_01.core.usecase.transcoder.sprint;
 
 
-import javafx.util.Pair;
 import kennan.co.ke.transcoder_01.DI.DIConfiguration;
 import kennan.co.ke.transcoder_01.core.common.DirectoryWalker;
 import kennan.co.ke.transcoder_01.core.common.ThumbnailUtil;
 import kennan.co.ke.transcoder_01.core.usecase.transcoder.base.AbstractTranscoderService;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
-import kennan.co.ke.transcoder_01.core.model.MediaModel;
+import kennan.co.ke.transcoder_01.core.model.MediaContainer;
 import kennan.co.ke.transcoder_01.core.usecase.transcoder.sprint.tileGenerator.TileGenerator;
-import kennan.co.ke.transcoder_01.repository.RepositoryTranscode.TranscodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -24,7 +22,7 @@ import java.util.regex.Pattern;
 public class SprintService extends AbstractTranscoderService {
 
 
-    private SprintService(MediaModel mediaModel) {
+    private SprintService(MediaContainer mediaModel) {
         super(mediaModel);
         super.process = AppProcess.SPRINT;
     }
@@ -38,7 +36,7 @@ public class SprintService extends AbstractTranscoderService {
             .getBean(TileGenerator.class);
 
 
-    public static AbstractTranscoderService create(MediaModel mediaModel) {
+    public static AbstractTranscoderService create(MediaContainer mediaModel) {
         return new SprintService(mediaModel);
     }
 

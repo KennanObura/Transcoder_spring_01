@@ -6,7 +6,7 @@ import kennan.co.ke.transcoder_01.core.usecase.transcoder.base.AbstractTranscode
 import kennan.co.ke.transcoder_01.core.model.AppMessage;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.Media;
-import kennan.co.ke.transcoder_01.core.model.MediaModel;
+import kennan.co.ke.transcoder_01.core.model.MediaContainer;
 
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.*;
 
@@ -14,13 +14,13 @@ import static kennan.co.ke.transcoder_01.core.entity.AppEvent.*;
 public class StreamableHslService extends AbstractTranscoderService {
 
 
-    private StreamableHslService(MediaModel mediaModel) {
+    private StreamableHslService(MediaContainer mediaModel) {
         super(mediaModel);
         super.process = AppProcess.STREAMABLEHSL;
     }
 
 
-    public static AbstractTranscoderService create(MediaModel mediaModel){
+    public static AbstractTranscoderService create(MediaContainer mediaModel){
         return new StreamableHslService(mediaModel);
     }
 
