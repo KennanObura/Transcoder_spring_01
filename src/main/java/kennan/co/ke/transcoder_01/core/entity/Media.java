@@ -54,6 +54,10 @@ public class Media  implements Serializable {
         return contentId;
     }
 
+    public void setContentId(int contentId) {
+        this.contentId = contentId;
+    }
+
     public MEDIATYPE getMediaType() {
         if (isVideo(mediaType)) return MEDIATYPE.video;
         else return MEDIATYPE.audio;
@@ -75,4 +79,11 @@ public class Media  implements Serializable {
                 '}';
     }
 
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
+    }
 }

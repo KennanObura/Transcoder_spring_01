@@ -8,6 +8,10 @@ import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 import kennan.co.ke.transcoder_01.core.model.MediaContainer;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.*;
 
 
@@ -37,12 +41,26 @@ public class StreamableHslService extends AbstractTranscoderService {
 
     private void runCommand() {
         try {
-            Runtime.getRuntime().exec(command()).waitFor();
+
+            Process runtimeProcess = Runtime.getRuntime().exec(command());
+            int exitVal = runtimeProcess.waitFor();
+            readCommandRunnerResult(runtimeProcess);
+            if(exitVal == 0) {
+                log.info("Process : " + process + " executed successfully");
+                AppMessage.write(FINALIZING, mediaModel, process);
+            }
             AppMessage.write(FINALIZING, mediaModel, process);
         } catch (Exception e) {
             AppMessage.write(TERMINATED, e.toString(), mediaModel, process);
             throw new RuntimeException(e);
         }
+    }
+
+    private static void readCommandRunnerResult(Process process) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(process.getInputStream()));
+        String line = "";
+        while ((line = bufferedReader.readLine()) != null)
+            log.info(line);
     }
 
     private String[] command() {

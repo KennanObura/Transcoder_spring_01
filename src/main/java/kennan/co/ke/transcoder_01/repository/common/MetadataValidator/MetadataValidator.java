@@ -45,6 +45,13 @@ public class MetadataValidator  {
     }
 
 
+    public static long getDuration(Media media) throws IOException, ParseException {
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        Date reference = dateFormat.parse("00:00:00");
+        Date date = dateFormat.parse(durationChecker(media));
+        return (date.getTime() - reference.getTime()) / 1000L;
+    }
+
     public boolean isMediaInDisk() {
         return false;
     }

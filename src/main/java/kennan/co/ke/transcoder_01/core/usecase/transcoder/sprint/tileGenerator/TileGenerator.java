@@ -46,9 +46,11 @@ public class TileGenerator implements InterfaceTileGenerator {
 
 
         for (int i = 0; i < sortedCandidatesFromDirectory.size(); i++)
-            drawImage(i, sortedCandidatesFromDirectory.get(i + 1), graphics); //draw image one by one to fill temp
+            drawImage(i, sortedCandidatesFromDirectory.get(i), graphics); //draw image one by one to fill temp
+//            System.out.println(sortedCandidatesFromDirectory.get(i));
 
         graphics.dispose(); // dispose off after done drawing
+        System.out.println(outputDirectory + " output to =================================");
         return ImageIO.write(tempImage, "jpg", new File(outputDirectory));
     }
 
