@@ -18,7 +18,7 @@ public interface BaseRepository {
 
     static final Logger log = LoggerFactory.getLogger(BaseRepository.class);
 
-    void dispatch(Media media, String... params) throws
+    void dispatch(Media media, Object... params) throws
             InterruptedException,
             IOException,
             ParseException,

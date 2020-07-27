@@ -17,7 +17,7 @@ import static kennan.co.ke.transcoder_01.core.entity.AppEvent.TERMINATED;
 public class VideoSplitterService extends AbstractTranscoderService {
     private VideoSplitterService(MediaContainer mediaModel) {
         super(mediaModel);
-        super.process = AppProcess.SPLIT;
+        super.process = AppProcess.split;
     }
 
     final private Media media = mediaModel.getMedia();

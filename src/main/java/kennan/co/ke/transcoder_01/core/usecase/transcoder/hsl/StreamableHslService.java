@@ -20,7 +20,7 @@ public class StreamableHslService extends AbstractTranscoderService {
 
     private StreamableHslService(MediaContainer mediaModel) {
         super(mediaModel);
-        super.process = AppProcess.STREAMABLEHSL;
+        super.process = AppProcess.hsl;
     }
 
 

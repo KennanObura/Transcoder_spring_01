@@ -1,15 +1,12 @@
 package kennan.co.ke.transcoder_01.core.usecase.transcoder.sprint;
 
 
-import kennan.co.ke.transcoder_01.DI.DIConfiguration;
 import kennan.co.ke.transcoder_01.core.common.DirectoryWalker;
 import kennan.co.ke.transcoder_01.core.common.ThumbnailUtil;
 import kennan.co.ke.transcoder_01.core.usecase.transcoder.base.AbstractTranscoderService;
 import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.model.MediaContainer;
 import kennan.co.ke.transcoder_01.core.usecase.transcoder.sprint.tileGenerator.TileGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 
 import java.io.File;
@@ -24,7 +21,7 @@ public class SprintService extends AbstractTranscoderService {
 
     private SprintService(MediaContainer mediaModel) {
         super(mediaModel);
-        super.process = AppProcess.SPRINT;
+        super.process = AppProcess.sprint;
     }
 
     final private static int SPRINT_HEIGHT = 108;

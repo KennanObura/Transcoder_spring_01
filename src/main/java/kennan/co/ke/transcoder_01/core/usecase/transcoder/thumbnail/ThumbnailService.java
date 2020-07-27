@@ -12,7 +12,7 @@ public class ThumbnailService extends AbstractTranscoderService {
 
     private ThumbnailService(MediaContainer mediaModel) {
         super(mediaModel);
-        super.process = AppProcess.THUMBNAIL;
+        super.process = AppProcess.thumbnail;
     }
 
     public static AbstractTranscoderService create(MediaContainer mediaModel) {

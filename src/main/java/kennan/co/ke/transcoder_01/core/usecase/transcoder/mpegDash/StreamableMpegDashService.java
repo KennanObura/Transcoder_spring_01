@@ -13,7 +13,7 @@ public class StreamableMpegDashService extends AbstractTranscoderService {
 
     private StreamableMpegDashService(MediaContainer mediaModel) {
         super(mediaModel);
-        super.process = AppProcess.STREAMABLEMPEGDASH;
+        super.process = AppProcess.mpegdash;
     }
 
 

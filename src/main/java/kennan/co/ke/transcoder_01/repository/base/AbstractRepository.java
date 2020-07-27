@@ -12,7 +12,7 @@ public abstract class AbstractRepository implements BaseRepository {
 
 
     @Override
-    public abstract void dispatch(Media media, String ...params) throws
+    public abstract void dispatch(Media media, Object ...params) throws
             InterruptedException,
             IOException,
             ParseException, PathNotFoundException, InvalidTimeRangeException;

@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.text.ParseException;
 
 
-
 public class VideoSplitterRepository extends AbstractRepository
         implements InterfaceVideoSplitterRepository {
 
@@ -26,23 +25,22 @@ public class VideoSplitterRepository extends AbstractRepository
 
 
     @Override
-    public void dispatch(Media media, String... params) throws
+    public void dispatch(Media media, Object... params) throws
             InvalidTimeRangeException, PathNotFoundException, IOException, ParseException {
 
         if (!isPathValid(media.getDirectory() + media.getName())) {
             throw PathNotFoundException.createWith(media.getDirectory() + media.getName());
         }
 
-        final String starttime = params[0];
-        final String endtime = params[1];
-        final String sort = params[2];
+        final String starttime = (String) params[0];
+        final String endtime = (String) params[1];
+        final String sort = (String) params[2];
 
         Pair<String, String> range = new Pair<>(starttime, endtime);
         if (!isInputValid(media, range))
             throw InvalidTimeRangeException.createWith(range.toString());
         else runGeneratorThread(media, starttime, endtime, sort);
     }
-
 
 
     @Override

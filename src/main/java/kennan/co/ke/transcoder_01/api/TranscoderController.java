@@ -2,6 +2,7 @@ package kennan.co.ke.transcoder_01.api;
 
 import kennan.co.ke.transcoder_01.DI.DIConfiguration;
 import kennan.co.ke.transcoder_01.api.Exception.PathNotFoundException;
+import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 import kennan.co.ke.transcoder_01.repository.RepositoryTranscode.TranscodeRepository;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -23,9 +24,9 @@ public class TranscoderController {
     @PostMapping("/")
     @ResponseBody
     public ResponseEntity<String> index(
-            @RequestBody Media media) throws
+            @RequestBody Media media, @RequestParam AppProcess process) throws
             InterruptedException, PathNotFoundException {
-        repository.dispatch(media);
+        repository.dispatch(media, process);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
