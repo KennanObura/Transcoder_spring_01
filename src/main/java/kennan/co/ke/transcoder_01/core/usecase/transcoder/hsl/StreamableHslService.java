@@ -8,9 +8,7 @@ import kennan.co.ke.transcoder_01.core.entity.AppProcess;
 import kennan.co.ke.transcoder_01.core.entity.Media;
 import kennan.co.ke.transcoder_01.core.model.MediaContainer;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 import static kennan.co.ke.transcoder_01.core.entity.AppEvent.*;
 
@@ -24,10 +22,9 @@ public class StreamableHslService extends AbstractTranscoderService {
     }
 
 
-    public static AbstractTranscoderService create(MediaContainer mediaModel){
+    public static AbstractTranscoderService create(MediaContainer mediaModel) {
         return new StreamableHslService(mediaModel);
     }
-
 
 
     private final Media media = mediaModel.getMedia();
@@ -44,8 +41,10 @@ public class StreamableHslService extends AbstractTranscoderService {
 
             Process runtimeProcess = Runtime.getRuntime().exec(command());
             int exitVal = runtimeProcess.waitFor();
+
+            validateMasterPlaylist(mediaModel.getMasterDirectory());
             readCommandRunnerResult(runtimeProcess);
-            if(exitVal == 0) {
+            if (exitVal == 0) {
                 log.info("Process : " + process + " executed successfully");
                 AppMessage.write(FINALIZING, mediaModel, process);
             }
@@ -56,8 +55,46 @@ public class StreamableHslService extends AbstractTranscoderService {
         }
     }
 
+    private static void validateMasterPlaylist(String masterDirectory) throws IOException {
+        try {
+
+            FileReader fileReader = new FileReader(new File(masterDirectory + "master.m3u8"));   //reads the file
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                if (!line.isEmpty() && line.charAt(0) == '/') {
+                    line = line.substring(1);
+                }
+                stringBuilder.append(line);      //appends line to string buffer
+                stringBuilder.append("\n");     //line feed
+            }
+
+            if (writeNewMasterList(stringBuilder, masterDirectory))
+                log.info("New file: " + stringBuilder.toString());
+
+            fileReader.close();    //closes the stream and release the resources
+        } catch (Exception e) {
+            log.info("Error " + e);
+            throw new IOException("Error File" + e);
+
+        }
+    }
+
+    private static boolean writeNewMasterList(StringBuilder stringBuilder, String masterDirectory) throws FileNotFoundException {
+        FileOutputStream fileOut = new FileOutputStream(masterDirectory + "master.m3u8");
+        try {
+            fileOut.write(stringBuilder.toString().getBytes());
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     private static void readCommandRunnerResult(Process process) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(process.getInputStream()));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line = "";
         while ((line = bufferedReader.readLine()) != null)
             log.info(line);
